@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Signup = () => {
+
+  const navigate = useNavigate();
 
   /* ---------------- STATE ---------------- */
   const [formData, setFormData] = useState({
@@ -87,7 +91,7 @@ const Signup = () => {
       password: "",
       confirmPassword: "",
     });
-
+-
     // AUTO CLOSE ALERT
     setTimeout(() => {
       setShowSuccess(false);
@@ -107,8 +111,11 @@ const Signup = () => {
       <div className="absolute inset-0 bg-black/50" />
 
       {/* BACK BUTTON */}
-      <div className="absolute top-4 left-4 z-20 flex items-center gap-2 text-white cursor-pointer">
-        <ArrowLeft size={22} />
+    <div
+     onClick={() => navigate("/")}
+     className="absolute top-4 left-4 z-20 flex items-center gap-2 text-white cursor-pointer hover:opacity-80 transition"
+     >      
+       <ArrowLeft size={22} />
         <span>Back</span>
       </div>
 
@@ -215,6 +222,16 @@ const Signup = () => {
             >
               Create Account ✨
             </button>
+            <div
+            onClick={() => navigate("/Signin")}
+            className="sm:col-span-2 text-center mt-4 text-white/80 cursor-pointer hover:text-cyan-300 transition"
+            >
+           Oops Already have an account?{" "}
+           <span className="font-semibold underline underline-offset-4">
+            Signin
+           </span>
+           </div>
+
           </form>
         </div>
       </div>

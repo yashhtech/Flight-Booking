@@ -1,8 +1,13 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Signin = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -145,6 +150,17 @@ const Signin = () => {
           >
             Signin
           </button>
+
+          <div
+            onClick={() => navigate("/Signup")}
+            className="sm:col-span-2 text-center mt-4 text-white/80 cursor-pointer hover:text-cyan-300 transition"
+            >
+            Oops Don't have an account?{" "}
+           <span className="font-semibold underline underline-offset-4">
+            Signup
+           </span>
+           </div>
+
         </motion.form>
       </div>
 
