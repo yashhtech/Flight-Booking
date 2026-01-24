@@ -13,7 +13,7 @@ import Footer from "../components/Footer"
 
 gsap.registerPlugin(MotionPathPlugin)
 
-/* ✈️ PAPER PLANE WITH SMOKE */
+/* ✈️ PAPER PLANE */
 const PaperPlane = () => (
   <svg width="90" height="90" viewBox="0 0 24 24" fill="none">
     {/* Plane */}
@@ -25,7 +25,7 @@ const PaperPlane = () => (
     <path
       d="M-40 18 C -20 10, -10 26, 10 18"
       stroke="white"
-      strokeWidth="2"
+      strokeWidth="4"
       fill="none"
       strokeLinecap="round"
       opacity="0.6"
@@ -51,9 +51,7 @@ const Home = () => {
     console.log({ tripType, origin, destination, departureDate, returnDate })
   }
 
-  /* 🔥 GSAP TEXT + PLANE */
   useEffect(() => {
-    // TEXT DROP + BOUNCE
     gsap.fromTo(
       titleRef.current.children,
       { y: -120, opacity: 0 },
@@ -66,7 +64,6 @@ const Home = () => {
       }
     )
 
-    // ✈️ PLANE ORBIT (SAFE)
     gsap.to(planeRef.current, {
       duration: 10,
       repeat: -1,
@@ -83,8 +80,9 @@ const Home = () => {
         autoRotate: true
       }
     })
+  
 
-    // ☁️ SMOKE ANIMATION
+  // ☁️ SMOKE ANIMATION
     gsap.fromTo(
       planeRef.current.querySelector("path:nth-child(2)"),
       { strokeDasharray: "5 15", opacity: 0.2 },
@@ -100,15 +98,13 @@ const Home = () => {
   }, [])
 
   return (
-    <div className="bg-[#0E1626] text-white overflow-x-hidden">
+    <div className="bg-[#fff] text-white overflow-x-hidden">
 
       <TopBar />
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-
-        {/* VIDEO */}
+      <section className="relative h-screen overflow-hidden pb-40 rounded-xl">
         <video
           src="https://res.cloudinary.com/dttbwsozv/video/upload/v1769223916/265858_opekh0.mp4"
           autoPlay
@@ -120,128 +116,139 @@ const Home = () => {
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
 
-        <div className="relative z-10 w-full px-10 md:px-24">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 px-10 md:px-24 pt-40 grid md:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <div
+              ref={planeRef}
+              className="absolute top-1/2 left-1/2 pointer-events-none"
+              style={{ transform: "translate(-50%, -50%)" }}
+            >
+              <PaperPlane />
+            </div>
 
-            {/* LEFT TEXT */}
-            <div className="relative">
-
-              {/* ✈️ PLANE */}
-              <div
-                ref={planeRef}
-                className="absolute top-1/2 left-1/2 z-30 pointer-events-none"
-                style={{ transform: "translate(-50%, -50%)" }}
-              >
-                <PaperPlane />
-              </div>
-
-              <p className="text-sky-300 tracking-widest text-sm mb-4">
-                THE YEAR IS 2026
-              </p>
-
-              <motion.h1
+            <motion.h1
   ref={titleRef}
   whileHover={{ scale: 1.05 }}
   transition={{ type: "spring", stiffness: 120 }}
   className="text-[52px] md:text-[72px] font-extrabold leading-tight cursor-default"
 >
-  <span className="block hover:text-sky-300 transition">
+  <span className="block text-sky-400 hover:text-amber-300 transition">
     Journey
   </span>
-  <span className="block hover:text-indigo-300 transition">
+  <span className="block hover:text-shadow-red-400 transition">
     Beyond
   </span>
-  <span className="block hover:text-purple-300 transition">
+  <span className="block hover:text-fuchsia-400 transition">
     Tomorrow.
   </span>
 </motion.h1>
 
-
-              <p className="mt-6 text-2xl text-gray-200 block hover:text-indigo-300 transition">
-                “I fly like paper, get high like planes, if you catch me at the border I’ve got visas in my name..!!”
-              </p>
-            </div>
-
-            {/* SEARCH CARD */}
-            <motion.div
-  initial={{ opacity: 0, y: 60 }}
-  animate={{ opacity: 1, y: 30 }}
-  transition={{ duration: 1 }}
-  whileHover={{
-    scale: 1.04,
-    boxShadow: "0 0 40px rgba(255,255,255,0.35)"
-  }}
-  className="mt-20 w-full max-w-\[520px\] rounded-[36px] border border-white bg-transparent p-8"
->
-
-
-              {/* TABS */}
-              <div className="flex gap-3 mb-6 bg-white/90 rounded-full p-1">
-                {["One-way", "Round-trip", "Multi-city"].map(t => (
-                  <button
-                    key={t}
-                    onClick={() => setTripType(t)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition
-                      ${tripType === t
-                        ? "bg-white text-black shadow"
-                        : "text-gray-600 hover:bg-white/70"}
-                    `}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-
-              {/* INPUTS */}
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  placeholder="📍 Origin"
-                  value={origin}
-                  onChange={e => setOrigin(e.target.value)}
-                  className="px-4 py-3 rounded-xl bg-white text-gray-700
-                   transition hover:scale-[1.03] hover:shadow-lg"
-                />
-
-                <DatePicker
-                  selected={departureDate}
-                  onChange={setDepartureDate}
-                  placeholderText="📅 Departure"
-                  className="w-full px-4 py-3 rounded-xl bg-white text-gray-700"
-                />
-
-                <input
-                  placeholder="📍 Destination"
-                  value={destination}
-                  onChange={e => setDestination(e.target.value)}
-                  className="px-4 py-3 rounded-xl bg-white text-gray-700"
-                />
-
-                <DatePicker
-                  selected={returnDate}
-                  onChange={setReturnDate}
-                  placeholderText="📅 Return"
-                  disabled={tripType === "One-way"}
-                  className="w-full px-4 py-3 rounded-xl bg-white text-gray-700"
-                />
-              </div>
-
-              <motion.button
-                onClick={handleSearch}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold text-lg"
-              >
-                Search Flights
-              </motion.button>
-            </motion.div>
-
+            <p className="mt-5 text-2xl text-gray-200 block hover:text-sky-300 transition">
+                “I fly like paper, get high like planes, if you catch me at the border I’ve got visas in my name..!!” </p>
           </div>
         </div>
       </section>
 
+      {/* ================= SEARCH (HALF OVERLAP FIXED) ================= */}
+      <section className="relative z-30 px-6 -mt-26">
+        <div className="mx-auto max-w-6xl bg-white rounded-[50px] shadow-2xl p-5 text-gray-800">
+
+          {/* TRIP TYPE */}
+          <div className="flex gap-3 mb-6 bg-gray-100 rounded-full p-2   w-fit ml-90"> 
+            {["One-way", "Round-trip", "Multi-city"].map(t => (
+              <button
+                key={t}
+                onClick={() => setTripType(t)}
+                className={`px-5 py-2 rounded-full text-sm font-bold transition 
+                  ${tripType === t
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 hover:bg-blue-100"}
+                `}
+              >
+                ✈️ {t}
+              </button>
+            ))}
+          </div>
+
+          {/* ROW 1 */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div>
+              <input
+                placeholder="📍 Source"
+                value={origin}
+                onChange={e => setOrigin(e.target.value)}
+                className="w-full px-4 py-3 rounded-full border-2 font-semibold
+                hover:border-blue-500 focus:ring-2 focus:ring-blue-500 transition"
+              />
+            </div>
+
+            <div>
+              <DatePicker
+                selected={departureDate}
+                onChange={setDepartureDate}
+                placeholderText="📅 Departure"
+                className="w-full px-4 py-3 rounded-full border-2 font-semibold hover:border-red-500 transition"
+              />
+            </div>
+
+            <div>
+              <input
+                placeholder="📍 Destination"
+                value={destination}
+                onChange={e => setDestination(e.target.value)}
+                className="w-full px-4 py-3 rounded-full border-2 font-semibold
+                hover:border-blue-500 transition"
+              />
+            </div>
+
+            <div>
+              <DatePicker
+                selected={returnDate}
+                onChange={setReturnDate}
+                disabled={tripType === "One-way"}
+                placeholderText="📅 Return"
+                className="w-full px-4 py-3 rounded-full border-2 font-semibold hover:border-red-500 transition"
+              />
+            </div>
+          </div>
+
+          {/* ROW 2 */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+            <div>
+              <label className="font-semibold mb-1 block">🎟 Travel Class</label>
+              <select className="w-full px-4 py-3 rounded-full border-2 font-semibold hover:border-blue-500 transition">
+                <option>Economy</option>
+                <option>Business</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="font-semibold mb-1 block">👥 Travellers</label>
+              <select className="w-full px-4 py-3 rounded-full border-2 font-semibold hover:border-red-500 transition">
+                <option>1 Adult</option>
+                <option>2 Adults</option>
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <button
+                onClick={handleSearch}
+                className="w-md h-[54px] rounded-full
+                bg-red-600 hover:bg-green-500
+                text-white text-lg font-bold
+                flex items-center justify-center gap-2 transition"
+              >
+                🔍 Find Ticket
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* FEATURES */}
-      <section className="px-12 py-28 bg-[#F5F7FB] text-[#0E1626]">
-        <div className="grid md:grid-cols-3 gap-10">
+      <section className="px-12 pt-40 pb-28 bg-[#fff] text-[#0E1626] -mt-39 relative z-10">
+        <div className="grid md:grid-cols-3 gap-10 mt-10">
           <FeatureCard />
           <FeatureCard />
           <FeatureCard />

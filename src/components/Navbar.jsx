@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import TopBar from "./TopBar";
-import GooeyNav from "./GooeyNav";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showTopBar, setShowTopBar] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
+  // Nav items with emoji
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Offers", href: "/offers" },
-    { label: "Destinations", href: "/destinations" },
+    { label: "Home", href: "/", icon: "🏠" },
+    { label: "About", href: "/about", icon: "ℹ️" },
+    { label: "Offers", href: "/offers", icon: "💰" },
+    { label: "Destinations", href: "/destinations", icon: "🌍" },
   ];
 
   useEffect(() => {
@@ -25,6 +25,11 @@ const Navbar = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  const handleClick = (e, href) => {
+    e.preventDefault();
+    navigate(href);
+  };
+
   return (
     <div className="w-full">
       {/* TopBar */}
@@ -32,142 +37,62 @@ const Navbar = () => {
         {showTopBar && <TopBar show={showTopBar} />}
       </AnimatePresence>
 
-      {/* NAVBAR */}
+      {/* Floating Navbar */}
       <motion.nav
         animate={{ y: showTopBar ? 40 : 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className="
-          fixed top-0 z-40 w-full
-          bg-gradient-to-r
-          from-red-600/25 via-rose-500/20 to-red-700/25
-          backdrop-blur-xl
-          border-b border-white/10
-        "
+        className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 
+                   bg-white/80 backdrop-blur-md border border-black/20 
+                   shadow-lg rounded-full px-10 md:px-16 py-3 flex items-center"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center h-[72px]">
-
-          {/* LOGO */}
-          <motion.h2
-            className="
-              text-3xl font-extrabold
-              text-white cursor-pointer
-              font-serif tracking-wide
-              hover:text-red-400 transition
-            "
-            onClick={() => navigate("/")}
-            whileHover={{ scale: 1.05 }}
+        {/* Logo */}
+        <motion.div
+          onClick={() => navigate("/")}
+          whileHover={{ scale: 1.1 }}
+          className="flex items-center gap-2 cursor-pointer select-none mr-8"
+        >
+          <motion.span
+            whileHover={{ rotate: -8, scale: 1.2 }}
+            className="text-3xl text-yellow-500 drop-shadow-[0_0_20px_rgba(255,215,0,0.9)]"
           >
-            Flivain
-          </motion.h2>
+            ✈️
+          </motion.span>
+          <span className="text-xl md:text-2xl font-extrabold text-black drop-shadow-lg">
+            SkyRoute
+          </span>
+        </motion.div>
 
-          {/* DESKTOP NAV */}
-          <div className="hidden md:block">
-            <GooeyNav
-              items={navItems}
-              particleCount={20}
-              particleR={120}
-              animationTime={700}
-              timeVariance={300}
-              colors={[
-                "#EF4444", // red
-                "#F43F5E", // rose
-                "#DC2626", // dark red
-                "#FB7185", // pinkish red
-              ]}
-              onClick={(href) => navigate(href)}
-              hoverColor="#EF4444"   // 🔥 RED HOVER
-            />
-          </div>
-
-          {/* CONTACT BUTTON */}
-          <motion.button
-            onClick={() => navigate("/contact")}
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "#EF4444",
-              color: "#fff",
-            }}
-            className="
-              hidden md:block
-              bg-white/90 text-black
-              px-5 py-2 rounded-full
-              font-semibold
-              shadow-lg
-            "
-          >
-            Contact
-          </motion.button>
-
-          {/* MOBILE HAMBURGER */}
-          <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
-              <motion.div
-                className="w-6 h-0.5 bg-white my-1"
-                animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              />
-              <motion.div
-                className="w-6 h-0.5 bg-white my-1"
-                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-              />
-              <motion.div
-                className="w-6 h-0.5 bg-white my-1"
-                animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              />
-            </button>
-          </div>
-        </div>
-
-        {/* MOBILE MENU */}
-        {isOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="
-              md:hidden
-              bg-gradient-to-b from-red-700/40 to-black/80
-              backdrop-blur-xl
-              border border-white/10
-              w-full px-6 pb-4
-              flex flex-col gap-4
-              shadow-2xl
-            "
-          >
-            {navItems.map((item, i) => (
-              <li
-                key={i}
-                onClick={() => {
-                  navigate(item.href);
-                  setIsOpen(false);
-                }}
-                className="
-                  text-white py-2 px-2 rounded-md
-                  cursor-pointer font-medium
-                  hover:text-red-400
-                  hover:bg-white/10
-                  transition
-                "
-              >
-                {item.label}
+        {/* Desktop Nav */}
+        <ul className="hidden md:flex gap-4">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.href;
+            return (
+              <li key={item.href} className="relative">
+                <a
+                  href={item.href}
+                  onClick={(e) => handleClick(e, item.href)}
+                  className={`relative z-10 px-5 py-2 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
+                    isActive
+                      ? "bg-black text-white scale-105"
+                      : "text-black hover:bg-black hover:text-white hover:scale-105"
+                  }`}
+                >
+                  <span>{item.icon}</span>
+                  {item.label}
+                </a>
               </li>
-            ))}
+            );
+          })}
+        </ul>
 
-            <motion.button
-              onClick={() => {
-                navigate("/contact");
-                setIsOpen(false);
-              }}
-              whileHover={{ scale: 1.05, backgroundColor: "#EF4444", color: "#fff" }}
-              className="
-                bg-white text-black
-                px-4 py-2 rounded-full
-                font-semibold
-              "
-            >
-              Contact
-            </motion.button>
-          </motion.ul>
-        )}
+        {/* Contact Button */}
+        <motion.button
+          onClick={() => navigate("/contact")}
+          whileHover={{ scale: 1.05, backgroundColor: "green", color: "#fff" }}
+          className="hidden md:block bg-red-600 text-white px-6 py-2 rounded-full font-semibold shadow-lg ml-8 transition-all"
+        >
+          Contact
+        </motion.button>
       </motion.nav>
     </div>
   );

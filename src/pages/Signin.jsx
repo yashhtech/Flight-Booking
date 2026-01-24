@@ -1,9 +1,9 @@
-// src/pages/Login.jsx
+
 import { motion } from "framer-motion";
 import { useState } from "react";
 import bgVideo from "../assets/vecteezy_summer-travel-around-the-world-concept-with-beach_9265750.mp4";
 
-const Login = () => {
+const Signin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -144,7 +144,7 @@ const Login = () => {
             type="submit"
             className="py-4 rounded-full bg-linear-to-r from-cyan-400 to-blue-500 text-black font-bold text-lg hover:scale-105 transition-all"
           >
-            Login
+            Signin
           </button>
         </motion.form>
       </div>
@@ -170,4 +170,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

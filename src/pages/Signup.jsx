@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import bgVideo from "../assets/62116-502737914_medium.mp4";
 
-const Register = () => {
+const Signup = () => {
 
   /* ---------------- STATE ---------------- */
   const [formData, setFormData] = useState({
@@ -276,4 +276,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup;
