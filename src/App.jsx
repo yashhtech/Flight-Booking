@@ -3,7 +3,7 @@ import Home from "./pages/Home"
 import About from "./pages/About"
 import Offers from "./pages/Offers"
 import Destinations from "./pages/Destinations"
-import Signin from "./pages/signin"
+import Signin from "./pages/Temp";
 import Signup from "./pages/signup"
 const App = () => {
   return (
