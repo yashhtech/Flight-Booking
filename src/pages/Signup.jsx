@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import bgVideo from "../assets/62116-502737914_medium.mp4";
 
 const Signup = () => {
 
@@ -102,7 +101,7 @@ const Signup = () => {
 
       {/* BACKGROUND VIDEO */}
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-        <source src={bgVideo} type="video/mp4" />
+        <source src="https://res.cloudinary.com/dttbwsozv/video/upload/v1769268268/62116-502737914_medium_cmffmg.mp4" type="video/mp4" />
       </video>
 
       <div className="absolute inset-0 bg-black/50" />

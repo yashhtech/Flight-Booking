@@ -48,7 +48,7 @@ const Signin = () => {
         playsInline
         className="absolute w-full h-full object-cover brightness-110 contrast-110 saturate-125"
       >
-        <source src="signinv.mp4" type="video/mp4" />
+        <source src="https://res.cloudinary.com/dttbwsozv/video/upload/v1769267927/vecteezy_summer-travel-around-the-world-concept-with-beach_9265750_uwgfsd.mp4" type="video/mp4" />
       </video>
 
       {/* OVERLAY */}
