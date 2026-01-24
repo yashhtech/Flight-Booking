@@ -4,14 +4,15 @@ import gsap from "gsap"
 import { MotionPathPlugin } from "gsap/MotionPathPlugin"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-
+import BestTravelerCard from "../components/BestTravelerCard"
 import TopBar from "../components/TopBar"
 import Navbar from "../components/Navbar"
-import FeatureCard from "../components/FeatureCard"
 import DestinationCard from "../components/DestinationCard"
 import Footer from "../components/Footer"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(MotionPathPlugin)
+gsap.registerPlugin(ScrollTrigger)
 
 /* ✈️ PAPER PLANE */
 const PaperPlane = () => (
@@ -40,7 +41,9 @@ const Home = () => {
   const [departureDate, setDepartureDate] = useState(null)
   const [returnDate, setReturnDate] = useState(null)
 
-  const titleRef = useRef(null)
+  const heroTitleRef = useRef(null)
+  const travelersTitleRef = useRef(null)
+
   const planeRef = useRef(null)
 
   const handleSearch = () => {
@@ -50,10 +53,34 @@ const Home = () => {
     }
     console.log({ tripType, origin, destination, departureDate, returnDate })
   }
+   
+
+
+   useEffect(() => {
+  if (!travelersTitleRef.current) return
+
+  gsap.fromTo(
+    travelersTitleRef.current,
+    { y: 80, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: travelersTitleRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    }
+  )
+}, [])
+
+
 
   useEffect(() => {
     gsap.fromTo(
-      titleRef.current.children,
+      heroTitleRef.current.children,
       { y: -120, opacity: 0 },
       {
         y: 0,
@@ -127,7 +154,7 @@ const Home = () => {
             </div>
 
             <motion.h1
-  ref={titleRef}
+  ref={heroTitleRef}
   whileHover={{ scale: 1.05 }}
   transition={{ type: "spring", stiffness: 120 }}
   className="text-[52px] md:text-[72px] font-extrabold leading-tight cursor-default"
@@ -151,7 +178,7 @@ const Home = () => {
 
       {/* ================= SEARCH (HALF OVERLAP FIXED) ================= */}
       <section className="relative z-30 px-6 -mt-26">
-        <div className="mx-auto max-w-6xl bg-white rounded-[50px] shadow-2xl p-5 text-gray-800">
+        <div className="mx-auto max-w-6xl bg-white rounded-[50px] shadow border-b-black-4 p-5 text-gray-800 transition-transform duration-500 ease-in-out hover:scale-105">
 
           {/* TRIP TYPE */}
           <div className="flex gap-3 mb-6 bg-gray-100 rounded-full p-2   w-fit ml-90"> 
@@ -249,14 +276,47 @@ const Home = () => {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="px-12 pt-40 pb-28 bg-[#fff] text-[#0E1626] -mt-39 relative z-10">
-        <div className="grid md:grid-cols-3 gap-10 mt-10">
-          <FeatureCard />
-          <FeatureCard />
-          <FeatureCard />
-        </div>
-      </section>
+      {/* BEST TRAVELERS */}
+<section className="px-12 pt-36 pb-28 bg-white text-[#161f32] relative z-10">
+  <h2
+    ref={travelersTitleRef}
+    className="text-4xl font-bold text-center mb-14 font-serif"
+  >
+    Best Travelers Of This Month
+  </h2>
+
+
+  <div className="flex flex-wrap justify-center gap-16">
+    <BestTravelerCard
+      placeImage="/src/assets/places/dubai.jpg"
+      personImage="/src/assets/persons/raju.jpg"
+      name="Raju Mullah"
+      quote="Exploring skies & cities worldwide"
+    />
+
+    <BestTravelerCard
+      placeImage="/src/assets/places/london.jpg"
+      personImage="/src/assets/persons/zaire.jpg"
+      name="Zaire Vetros"
+      quote="Wanderer. Dreamer. Explorer."
+    />
+
+    <BestTravelerCard
+      placeImage="/src/assets/places/paris.jpg"
+      personImage="/src/assets/persons/marcus.jpg"
+      name="Marcus Dias"
+      quote="Collecting moments, not things"
+    />
+
+    <BestTravelerCard
+      placeImage="/src/assets/places/paris.jpg"
+      personImage="/src/assets/persons/marcus.jpg"
+      name="Marcus Dias"
+      quote="Collecting moments, not things"
+    />
+  </div>
+</section>
+
 
       {/* DESTINATIONS */}
       <section className="px-12 py-28 bg-[#EDF1F7] text-[#0E1626]">
