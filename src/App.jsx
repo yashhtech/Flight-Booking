@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Offers from "./pages/Offers"
 import Destinations from "./pages/Destinations"
-import Signin from "./pages/Temp";
-import Signup from "./pages/signup"
+import Signin from "./pages/Signin"
+import Signup from "./pages/Regig"
 const App = () => {
   return (
    
