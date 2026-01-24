@@ -42,7 +42,7 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center overflow-hidden">
 
         <video
-          src="/264848_medium.mp4"
+          src="https://res.cloudinary.com/dttbwsozv/video/upload/v1769223241/264848_medium_qg0wjx.mp4"
           autoPlay
           loop
           muted
