@@ -4,7 +4,7 @@ import About from "./pages/About"
 import Offers from "./pages/Offers"
 import Destinations from "./pages/Destinations"
 import Signin from "./pages/Signin"
-import Signup from "./pages/Regig"
+import Signup from "./pages/Signup"
 const App = () => {
   return (
    
