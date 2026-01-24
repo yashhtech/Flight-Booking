@@ -9,7 +9,6 @@ import FeatureCard from "../components/FeatureCard"
 import DestinationCard from "../components/DestinationCard"
 import Footer from "../components/Footer"
 
-import heroVideo from "../assets/264848_medium.mp4"
 
 const Home = () => {
   const [tripType, setTripType] = useState("One-way")
@@ -43,7 +42,7 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center overflow-hidden">
 
         <video
-          src={heroVideo}
+          src="/264848_medium.mp4"
           autoPlay
           loop
           muted
