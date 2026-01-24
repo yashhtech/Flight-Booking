@@ -104,7 +104,7 @@ const Home = () => {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section className="relative h-screen overflow-hidden pb-40 rounded-xl">
+      <section className="relative h-screen overflow-hidden pb-40 rounded">
         <video
           src="https://res.cloudinary.com/dttbwsozv/video/upload/v1769223916/265858_opekh0.mp4"
           autoPlay
@@ -233,11 +233,14 @@ const Home = () => {
             <div className="md:col-span-2">
               <button
                 onClick={handleSearch}
-                className="w-md h-[54px] rounded-full
-                bg-red-600 hover:bg-green-500
-                text-white text-lg font-bold
-                flex items-center justify-center gap-2 transition"
-              >
+                className="w-full
+               px-6 h-[54px] 
+               rounded-full
+               bg-red-600 hover:bg-green-500
+               text-white text-lg font-bold
+               flex items-center justify-center gap-2
+               transition
+               ">
                 🔍 Find Ticket
               </button>
             </div>

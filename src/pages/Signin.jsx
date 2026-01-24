@@ -1,7 +1,6 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import bgVideo from "../assets/vecteezy_summer-travel-around-the-world-concept-with-beach_9265750.mp4";
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +48,7 @@ const Signin = () => {
         playsInline
         className="absolute w-full h-full object-cover brightness-110 contrast-110 saturate-125"
       >
-        <source src={bgVideo} type="video/mp4" />
+        <source src="signinv.mp4" type="video/mp4" />
       </video>
 
       {/* OVERLAY */}
