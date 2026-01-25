@@ -8,38 +8,100 @@ const points = [
   "Instant ticket confirmation",
   "Top international airlines",
   "Smooth check-in experience",
-  "Secure & fast payments",
+  "Secure & fast payments ",
 ]
 
-const images = ["/10112781.jpg", "/boarding.jpg"]
+const images = ["/travelerlove/10112781.jpg", "/travelerlove/coin.jpg","/travelerlove/indoor.jpg","/travelerlove/merry.jpg","/travelerlove/plane.jpg"]
 
 const WhyTravelersLoveUs = () => {
   const cardRef = useRef(null)
   const headingRef = useRef(null)
-  const pointsRef = useRef([])
+  const pointRefs = useRef([])
   const imageRef = useRef(null)
 
   const [imgIndex, setImgIndex] = useState(0)
 
-  /* 🔁 IMAGE SWAP */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setImgIndex((prev) => (prev + 1) % images.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
+  /* 🖼 IMAGE SWITCH (SLOW & PREMIUM) */
+useEffect(() => {
+  if (!imageRef.current) return
 
-  /* 🎬 ANIMATIONS */
+  gsap.fromTo(
+    imageRef.current,
+    {
+      opacity: 0,
+      scale: 1.08,
+      filter: "blur(8px)",
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      duration: 1.4,
+      ease: "power3.out",
+    }
+  )
+}, [imgIndex])
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setImgIndex((p) => (p + 1) % images.length)
+  }, 4200)
+
+  return () => clearInterval(interval)
+}, [])
+
+
+
   useEffect(() => {
-    // FLOAT CARD
+    /* FLOAT CARD */
     gsap.fromTo(
       cardRef.current,
-      { y: 60, opacity: 0 },
+      { y: 40, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        duration: 1.2,
+        duration: 1.6,
         ease: "power3.out",
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top 85%",
+        },
+      }
+    )
+
+    /* HEADING DECODE (SLOW) */
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    const original = headingRef.current.innerText
+    let frame = 0
+
+    const decrypt = () => {
+      headingRef.current.innerText = original
+        .split("")
+        .map((c, i) =>
+          i < frame ? original[i] : chars[Math.floor(Math.random() * chars.length)]
+        )
+        .join("")
+      frame++
+      if (frame <= original.length) requestAnimationFrame(decrypt)
+    }
+
+    ScrollTrigger.create({
+      trigger: headingRef.current,
+      start: "top 90%",
+      once: true,
+      onEnter: decrypt,
+    })
+
+    /* POINTS – SLOW STAIR */
+    gsap.fromTo(
+      pointRefs.current,
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.35,
+        duration: 1.1,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: cardRef.current,
           start: "top 80%",
@@ -47,106 +109,91 @@ const WhyTravelersLoveUs = () => {
       }
     )
 
-    // HEADING PUZZLE EFFECT
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*"
-    const original = headingRef.current.innerText
-    let frame = 0
-
-    const scramble = () => {
-      headingRef.current.innerText = original
-        .split("")
-        .map((char, i) =>
-          i < frame ? original[i] : chars[Math.floor(Math.random() * chars.length)]
-        )
-        .join("")
-
-      frame++
-      if (frame <= original.length) requestAnimationFrame(scramble)
-    }
-
-    ScrollTrigger.create({
-      trigger: headingRef.current,
-      start: "top 85%",
-      once: true,
-      onEnter: scramble,
+    /* IMAGE FLOAT */
+    gsap.to(imageRef.current, {
+      y: 14,
+      rotate: 1.5,
+      duration: 3,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
     })
-
-    // BULLET POINT STAIR EFFECT
-    gsap.fromTo(
-      pointsRef.current,
-      { x: 40, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        stagger: 0.25,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 75%",
-        },
-      }
-    )
   }, [])
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-14 px-6 bg-white">
       <div
         ref={cardRef}
         className="
           max-w-6xl mx-auto
-          grid md:grid-cols-2 gap-14
-          bg-white rounded-3xl
-          shadow-[0_40px_90px_rgba(0,0,0,0.15)]
+          grid md:grid-cols-2 gap-12
+          rounded-3xl
+          bg-white
+          shadow-[0_35px_90px_rgba(0,0,0,0.12)]
           p-10
         "
       >
-        {/* LEFT IMAGE */}
-        <div className="flex justify-center items-center">
+        {/* IMAGE SIDE */}
+        <div className="relative flex justify-center items-center">
+          <div className="relative w-[360px] h-[460px] overflow-hidden rounded-3xl" />
           <img
             ref={imageRef}
-            key={imgIndex}
             src={images[imgIndex]}
             alt="ticket"
             className="
-              w-full max-w-sm
+              relative z-10
+              rounded-4xl
+              w-full h-full
+              object-cover
+              will-change-transform
               transition-all duration-700
-              hover:scale-105
+              hover:scale-105 hover:rotate-1
               drop-shadow-2xl
             "
           />
         </div>
 
-        {/* RIGHT CONTENT */}
+        {/* CONTENT */}
         <div>
           <h3
             ref={headingRef}
-            className="text-4xl font-extrabold mb-8 text-indigo-700"
+            className="text-4xl font-extrabold text-slate-900 mb-10 font-serif"
           >
-            Why travelers love us
+            Why Travellers love us 🗺️⁀જ✈︎
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {points.map((point, i) => (
               <div
                 key={i}
-                ref={(el) => (pointsRef.current[i] = el)}
-                className={`
-                  flex items-center gap-4
-                  px-6 py-4 rounded-full
-                  font-semibold text-white
-                  shadow-lg
-                  hover:scale-105 transition
-                  ${[
-                    "bg-gradient-to-r from-blue-500 to-indigo-500",
-                    "bg-gradient-to-r from-emerald-500 to-teal-500",
-                    "bg-gradient-to-r from-pink-500 to-rose-500",
-                    "bg-gradient-to-r from-orange-400 to-yellow-400",
-                  ][i]}
-                `}
+                ref={(el) => (pointRefs.current[i] = el)}
+                className="
+                  flex items-center gap-5
+                  p-5 rounded-xl
+                  bg-slate-50
+                  border border-slate-200
+                  shadow-sm
+                  transition-all duration-300
+                  hover:shadow-xl hover:-translate-y-1
+                "
               >
-                <span className="text-xl">✔</span>
-                {point}
+                {/* NUMBER CIRCLE */}
+                <div
+                  className="
+                    w-11 h-11
+                    flex items-center justify-center
+                    rounded-full
+                    bg-indigo-600
+                    text-white font-bold
+                    shrink-0
+                  "
+                >
+                  {i + 1}
+                </div>
+
+                <p className="text-slate-700 font-semibold text-lg">
+                  {point}
+                </p>
               </div>
             ))}
           </div>
