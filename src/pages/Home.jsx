@@ -10,6 +10,9 @@ import Navbar from "../components/Navbar"
 import DestinationCard from "../components/DestinationCard"
 import Footer from "../components/Footer"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import * as THREE from "three"
+import GLOBE from "vanta/dist/vanta.globe.min"
+
 
 
 gsap.registerPlugin(MotionPathPlugin)
@@ -46,6 +49,10 @@ const Home = () => {
   const travelersTitleRef = useRef(null)
   const travelersOrbitRef = useRef(null)
 
+  const globeRef = useRef(null)
+  const vantaEffect = useRef(null)
+
+
 
   const planeRef = useRef(null)
 
@@ -61,52 +68,59 @@ const Home = () => {
 useEffect(() => {
   if (!travelersOrbitRef.current) return
 
-  const cards = travelersOrbitRef.current.querySelectorAll(
-    ".travelers-cards > div"
+  const cards = gsap.utils.toArray(
+    travelersOrbitRef.current.querySelectorAll(".travelers-cards > div")
   )
 
-  // 🚀 INITIAL SET
+  // 🔒 Kill old tweens (VERY IMPORTANT)
+  gsap.killTweensOf(cards)
+
+  // 🚀 INITIAL STATE
   gsap.set(cards, {
-    y: -140,
+    y: -120,
     opacity: 0,
-    scale: 0.9,
+    scale: 0.95,
+    force3D: true,
     willChange: "transform",
   })
 
-  // 🌧 DROP + SPREAD (ON SCROLL)
+  // 🌧 DROP-IN (ON SCROLL)
   gsap.to(cards, {
     y: 0,
     opacity: 1,
     scale: 1,
-    duration: 1.4,
-    stagger: 0.18,
-    ease: "power4.out",
+    duration: 1.2,
+    stagger: 0.15,
+    ease: "power3.out",
     scrollTrigger: {
       trigger: travelersOrbitRef.current,
       start: "top 75%",
+      once: true, // 👈 replay / conflict band
     },
   })
 
-  // 🌬 FLOATING IDLE MOTION (SUBTLE PREMIUM FEEL)
+  // 🌊 CONTINUOUS FLOATING LOOP (NO YOYO ❌)
   cards.forEach((card, i) => {
     gsap.to(card, {
-      y: "+=14",
-      duration: 3 + i * 0.4,
+      y: "+=18",
+      duration: 4 + i * 0.4,
       ease: "sine.inOut",
-      yoyo: true,
       repeat: -1,
-      delay: i * 0.2,
+      yoyo: true,
+      overwrite: "auto", // 👈 smooth overwrite
     })
 
     gsap.to(card, {
-      rotation: i % 2 === 0 ? 1.5 : -1.5,
-      duration: 4,
+      rotation: i % 2 === 0 ? 2 : -2,
+      duration: 6,
       ease: "sine.inOut",
-      yoyo: true,
       repeat: -1,
+      yoyo: true,
+      overwrite: "auto",
     })
   })
 }, [])
+
 
 
 
@@ -136,6 +150,30 @@ useEffect(() => {
   )
 }, [])
 
+  useEffect(() => {
+  if (!globeRef.current) return
+
+  vantaEffect.current = GLOBE({
+    el: globeRef.current,
+    THREE,
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 300,
+    minWidth: 300,
+    scale: 1,
+    scaleMobile: 1,
+    color: 0x2a16d4,
+    color2: 0x6a5cff,
+    size: 1.1,
+    backgroundColor: 0xe5e5ff,
+    
+  })
+
+  return () => {
+    if (vantaEffect.current) vantaEffect.current.destroy()
+  }
+}, [])
 
 
 
@@ -238,7 +276,7 @@ useEffect(() => {
       </section>
 
       {/* ================= SEARCH (HALF OVERLAP FIXED) ================= */}
-      <section className="relative z-30 px-6 -mt-26">
+      <section className="relative z-30 px-6 -mt-27">
         <div className="mx-auto max-w-6xl bg-white rounded-[50px] shadow border-b-black-4 p-5 text-gray-800 transition-transform duration-500 ease-in-out hover:scale-105">
 
           {/* TRIP TYPE */}
@@ -338,21 +376,28 @@ useEffect(() => {
       </section>
 
       {/* BEST TRAVELERS */}
-   <section className="px-12 pt-28 pb-28 bg-white text-[#161f32] relative z-10 ">
-   
+   <section className="px-12 pt-28 pb-28 bg-white text-[#161f32] relative z-10 -mt-40">
+
+    {/* 🌍 VANTA BACKGROUND */}
+    <div
+    ref={globeRef}
+    className="absolute inset-0 z-0"
+    />
+    
+   <div className="relative z-10">
    <h2
     ref={travelersTitleRef}
-    className="text-5xl font-bold text-center mb-14 font-serif pb-25 "
+    className="text-5xl font-bold text-center mb-14 font-serif pb-25 pt-35"
   >
     Best Travelers Of This Month
   </h2>
-    <div
+  
+  
+  <div
   ref={travelersOrbitRef}
-  className="relative flex justify-center items-center min-h-[420px] pt-10 perspective-[1200px]"
+  className="relative flex justify-center items-center min-h-[420px] pt-10"
 >
-
-
-  <div className="travelers-cards flex flex-wrap justify-center gap-16">
+  <div className="travelers-cards flex flex-wrap justify-center gap-16 touch-pan-y">
 
     <BestTravelerCard
       placeImage="places/dubai.jpg"
@@ -382,7 +427,7 @@ useEffect(() => {
       quote="Collecting moments, not things"
     />
   </div>
-
+   </div>
   </div>
   
 </section>
