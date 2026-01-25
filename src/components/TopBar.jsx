@@ -27,8 +27,8 @@ const TopBar = ({ show }) => {
         textShadow: "0 0 10px rgba(16,185,129,0.6)",
       }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="cursor-pointer font-semibold text-gray-800"
-    >
+      className="px-4 py-1 bg-green-300 rounded-full  text-gray-500 font-semibold shadow-sm text-xl" >
+    
       {item}
     </motion.span>
   ))}
@@ -36,21 +36,21 @@ const TopBar = ({ show }) => {
 
 
         {/* Right Buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-10">
           <motion.button
             onClick={() => navigate("/Signin")}
-            whileHover={{ scale: 1.05, backgroundColor: "#10B981", color: "#fff" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-4 py-1 bg-black rounded-full border border-white text-white font-semibold shadow-sm"
+            className="px-6 py-2 bg-blue-400 rounded-full  text-white font-semibold shadow-sm text-xl"
           >
             Sign In
           </motion.button>
 
           <motion.button
             onClick={() => navigate("/Signup")}
-            whileHover={{ scale: 1.05, backgroundColor: "#06B6D4", color: "#fff" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-4 py-1 rounded-full bg-black text-white font-semibold shadow-sm"
+            className="px-6 py-2 rounded-full bg-pink-500 text-white font-semibold shadow-sm text-xl"
           >
             Sign Up
           </motion.button>

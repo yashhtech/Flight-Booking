@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { motion } from "framer-motion"
+import { correctBorderRadius, motion } from "framer-motion"
 import gsap from "gsap"
 import { MotionPathPlugin } from "gsap/MotionPathPlugin"
 import DatePicker from "react-datepicker"
@@ -165,9 +165,8 @@ useEffect(() => {
     scaleMobile: 1,
     color: 0x2a16d4,
     color2: 0x6a5cff,
-    size: 1.1,
+    size: 1.17,
     backgroundColor: 0xe5e5ff,
-    
   })
 
   return () => {
