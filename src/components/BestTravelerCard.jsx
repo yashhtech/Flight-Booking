@@ -73,7 +73,7 @@ const BestTravelerCard = ({
         {name}
       </h3>
 
-      <p className="mt-2 text-base  text-gray-900 font-serif font-medium max-w-[200px] leading-relaxed">
+      <p className="mt-2 text-base  text-gray-900 italic font-medium max-w-[200px] leading-relaxed">
         {quote}
       </p>
     </div>

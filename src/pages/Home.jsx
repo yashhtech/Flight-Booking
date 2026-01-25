@@ -292,27 +292,27 @@ const Home = () => {
       placeImage="places/dubai.jpg"
       personImage="persons/raju.jpg"
       name="Raju Mullah"
-      quote="Exploring skies & cities worldwide"
+      quote=' "Exploring skies & cities worldwide" '
     />
 
     <BestTravelerCard
-      placeImage="/src/assets/places/london.jpg"
-      personImage="/src/assets/persons/zaire.jpg"
-      name="Zaire Vetros"
-      quote="Wanderer. Dreamer. Explorer."
+      placeImage="places/london.jpg"
+      personImage="persons/tanya.jpg"
+      name="Tanya Vetros"
+      quote= '"Wanderer. Dreamer. Explorer."'
     />
 
     <BestTravelerCard
-      placeImage="/src/assets/places/paris.jpg"
-      personImage="/src/assets/persons/marcus.jpg"
+      placeImage="places/paris.jpg"
+      personImage="persons/marcus.jpg"
       name="Marcus Dias"
-      quote="Collecting moments, not things"
+      quote= ' "Collecting moments, not things" '
     />
 
     <BestTravelerCard
-      placeImage="/src/assets/places/paris.jpg"
-      personImage="/src/assets/persons/marcus.jpg"
-      name="Marcus Dias"
+      placeImage="places/switzerland.jpg"
+      personImage="persons/zubair.jpg"
+      name="Zubair Dyna"
       quote="Collecting moments, not things"
     />
   </div>
