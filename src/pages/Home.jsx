@@ -11,6 +11,7 @@ import DestinationCard from "../components/DestinationCard"
 import Footer from "../components/Footer"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
+
 gsap.registerPlugin(MotionPathPlugin)
 gsap.registerPlugin(ScrollTrigger)
 
@@ -288,8 +289,8 @@ const Home = () => {
 
   <div className="flex flex-wrap justify-center gap-16">
     <BestTravelerCard
-      placeImage="/src/assets/places/dubai.jpg"
-      personImage="/src/assets/persons/raju.jpg"
+      placeImage="places/dubai.jpg"
+      personImage="persons/raju.jpg"
       name="Raju Mullah"
       quote="Exploring skies & cities worldwide"
     />
