@@ -44,6 +44,8 @@ const Home = () => {
 
   const heroTitleRef = useRef(null)
   const travelersTitleRef = useRef(null)
+  const travelersOrbitRef = useRef(null)
+
 
   const planeRef = useRef(null)
 
@@ -55,27 +57,85 @@ const Home = () => {
     console.log({ tripType, origin, destination, departureDate, returnDate })
   }
    
+   
+useEffect(() => {
+  if (!travelersOrbitRef.current) return
+
+  const cards = travelersOrbitRef.current.querySelectorAll(
+    ".travelers-cards > div"
+  )
+
+  // 🚀 INITIAL SET
+  gsap.set(cards, {
+    y: -140,
+    opacity: 0,
+    scale: 0.9,
+    willChange: "transform",
+  })
+
+  // 🌧 DROP + SPREAD (ON SCROLL)
+  gsap.to(cards, {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    duration: 1.4,
+    stagger: 0.18,
+    ease: "power4.out",
+    scrollTrigger: {
+      trigger: travelersOrbitRef.current,
+      start: "top 75%",
+    },
+  })
+
+  // 🌬 FLOATING IDLE MOTION (SUBTLE PREMIUM FEEL)
+  cards.forEach((card, i) => {
+    gsap.to(card, {
+      y: "+=14",
+      duration: 3 + i * 0.4,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: i * 0.2,
+    })
+
+    gsap.to(card, {
+      rotation: i % 2 === 0 ? 1.5 : -1.5,
+      duration: 4,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    })
+  })
+}, [])
 
 
-   useEffect(() => {
+
+useEffect(() => {
   if (!travelersTitleRef.current) return
 
   gsap.fromTo(
     travelersTitleRef.current,
-    { y: 80, opacity: 0 },
+    {
+      y: 60,
+      opacity: 0,
+      willChange: "transform, opacity",
+    },
     {
       y: 0,
       opacity: 1,
-      duration: 1.2,
-      ease: "power4.out",
+      duration: 1.4,
+      ease: "power3.out",
+      force3D: true,
       scrollTrigger: {
         trigger: travelersTitleRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
+        start: "top 85%",
+        end: "top 65%",
+        scrub: 0.6,        // 👈 SMOOTH SCROLL SYNC
       },
     }
   )
 }, [])
+
 
 
 
@@ -278,16 +338,22 @@ const Home = () => {
       </section>
 
       {/* BEST TRAVELERS */}
-<section className="px-12 pt-36 pb-28 bg-white text-[#161f32] relative z-10">
-  <h2
+   <section className="px-12 pt-28 pb-28 bg-white text-[#161f32] relative z-10 ">
+   
+   <h2
     ref={travelersTitleRef}
-    className="text-4xl font-bold text-center mb-14 font-serif"
+    className="text-5xl font-bold text-center mb-14 font-serif pb-25 "
   >
     Best Travelers Of This Month
   </h2>
+    <div
+  ref={travelersOrbitRef}
+  className="relative flex justify-center items-center min-h-[420px] pt-10 perspective-[1200px]"
+>
 
 
-  <div className="flex flex-wrap justify-center gap-16">
+  <div className="travelers-cards flex flex-wrap justify-center gap-16">
+
     <BestTravelerCard
       placeImage="places/dubai.jpg"
       personImage="persons/raju.jpg"
@@ -316,6 +382,9 @@ const Home = () => {
       quote="Collecting moments, not things"
     />
   </div>
+
+  </div>
+  
 </section>
 
 

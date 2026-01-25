@@ -14,11 +14,12 @@ const BestTravelerCard = ({
         rounded-t-[140px]
         border border-black/5
         bg-white
-        shadow-[0_10px_25px_rgba(0,0,0,0.08)]
+        shadow-[0_10px_30px_rgba(0,0,0,0.08)]
         hover:shadow-[0_28px_80px_rgba(0,0,0,0.30)]
         transition-all duration-500 ease-out
-        hover:-translate-y-3
+        hover:-translate-y-4
         pb-6
+        
       "
     >
       {/* IMAGE WRAPPER (ROUNDED TOP) */}
