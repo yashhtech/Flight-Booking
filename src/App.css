@@ -46,4 +46,20 @@ body {
   }
 }
 
+@keyframes floatPremium {
+  0% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+}
+
+.floating-ticket {
+  animation: floatPremium 5.5s ease-in-out infinite;
+  will-change: transform;
+}
 

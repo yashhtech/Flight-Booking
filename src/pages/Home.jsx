@@ -12,6 +12,8 @@ import Footer from "../components/Footer"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import * as THREE from "three"
 import GLOBE from "vanta/dist/vanta.globe.min"
+import MacDock from "../components/MacDock"
+import WhyTravelersLoveUs from "../components/PopularFlights"
 
 
 
@@ -428,10 +430,9 @@ useEffect(() => {
   </div>
    </div>
   </div>
-  
 </section>
-
-
+<MacDock />
+<WhyTravelersLoveUs />
       {/* DESTINATIONS */}
       <section className="px-12 py-28 bg-[#EDF1F7] text-[#0E1626]">
         <h2 className="text-4xl font-bold mb-14">
