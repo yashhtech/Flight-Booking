@@ -11,7 +11,7 @@ const points = [
   "Secure & fast payments ",
 ]
 
-const images = ["/travelerlove/10112781.jpg", "/travelerlove/coin.jpg","/travelerlove/indoor.jpg","/travelerlove/merry.jpg","/travelerlove/plane.jpg"]
+const images = ["/travelerlove/10112781.jpg", "/travelerlove/world.jpg","/travelerlove/bank.jpg","/travelerlove/passport.jpg","/travelerlove/flight.jpg"]
 
 const WhyTravelersLoveUs = () => {
   const cardRef = useRef(null)
@@ -121,58 +121,61 @@ useEffect(() => {
   }, [])
 
   return (
-    <section className="py-14 px-6 bg-white">
+    <section className="py-14 px-6 bg-gray-700 ">
       <div
         ref={cardRef}
         className="
-          max-w-6xl mx-auto
+          max-w-8xl mx-auto 
           grid md:grid-cols-2 gap-12
-          rounded-3xl
+          rounded-full
           bg-white
           shadow-[0_35px_90px_rgba(0,0,0,0.12)]
           p-10
+          hover:scale-110
+          
         "
       >
         {/* IMAGE SIDE */}
-        <div className="relative flex justify-center items-center">
-          <div className="relative w-[360px] h-[460px] overflow-hidden rounded-3xl" />
+        <div className="relative flex justify-center items-center  w-[360px] h-[460px] rounded-full mt-10 ml-22 hover:shadow-2xl">
+  
           <img
             ref={imageRef}
             src={images[imgIndex]}
             alt="ticket"
             className="
               relative z-10
-              rounded-4xl
-              w-full h-full
+              rounded-full
+              w-[360px] h-[460px]
               object-cover
               will-change-transform
               transition-all duration-700
-              hover:scale-105 hover:rotate-1
+              hover:scale-110 hover:rotate-1
               drop-shadow-2xl
             "
           />
         </div>
 
         {/* CONTENT */}
-        <div>
+        <div className=" -ml-40 mr-19 bg-white rounded-r-full">
           <h3
             ref={headingRef}
-            className="text-4xl font-extrabold text-slate-900 mb-10 font-serif"
+            className=" text-5xl font-extrabold text-slate-900 mb-10 font-serif"
           >
             Why Travellers love us 🗺️⁀જ✈︎
           </h3>
 
-          <div className="space-y-6">
+          <div className="space-y-6 bg-white rounded-4xl mb-5">
             {points.map((point, i) => (
               <div
                 key={i}
                 ref={(el) => (pointRefs.current[i] = el)}
                 className="
                   flex items-center gap-5
-                  p-5 rounded-xl
+                  p-5  rounded-full
                   bg-slate-50
                   border border-slate-200
                   shadow-sm
+                  
                   transition-all duration-300
                   hover:shadow-xl hover:-translate-y-1
                 "
@@ -184,14 +187,14 @@ useEffect(() => {
                     flex items-center justify-center
                     rounded-full
                     bg-indigo-600
-                    text-white font-bold
+                    text-white font-bold text-3xl
                     shrink-0
                   "
                 >
                   {i + 1}
                 </div>
 
-                <p className="text-slate-700 font-semibold text-lg">
+                <p className="text-slate-700 font-semibold text-3xl">
                   {point}
                 </p>
               </div>
