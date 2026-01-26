@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import TopBar from "./TopBar";
+import { FaUserCircle } from "react-icons/fa";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,10 +12,10 @@ const Navbar = () => {
 
   // Nav items with emoji
   const navItems = [
-    { label: "Home", href: "/", icon: "🏠" },
-    { label: "About", href: "/about", icon: "ℹ️" },
-    { label: "Offers", href: "/offers", icon: "💰" },
-    { label: "Destinations", href: "/destinations", icon: "🌍" },
+    { label: "Home", href: "/", icon: "✈︎" },
+    { label: "About", href: "/about", icon: "ⓘ" },
+    { label: "Offers", href: "/offers", icon: "$" },
+    { label: "Destinations", href: "/destinations", icon: "🗺" },
   ];
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Navbar = () => {
         >
           <motion.span
             whileHover={{ rotate: -8, scale: 1.2 }}
-            className="text-3xl text-yellow-500 drop-shadow-[0_0_20px_rgba(255,215,0,0.9)]"
+            className="text-3xl text-yellow-500 drop-shadow-[0_0_20px_rgba(255,215,0,0.9)] -ml-6"
           >
             ✈️
           </motion.span>
@@ -73,7 +75,7 @@ const Navbar = () => {
                   onClick={(e) => handleClick(e, item.href)}
                   className={`relative z-10 px-5 py-2 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
                     isActive
-                      ? "bg-black text-white scale-105"
+                      ? "bg-blue-400 text-white scale-105"
                       : "text-black hover:bg-black hover:text-white hover:scale-105"
                   }`}
                 >
@@ -88,11 +90,25 @@ const Navbar = () => {
         {/* Contact Button */}
         <motion.button
           onClick={() => navigate("/contact")}
-          whileHover={{ scale: 1.05, backgroundColor: "green", color: "#fff" }}
-          className="hidden md:block bg-red-600 text-white px-6 py-2 rounded-full font-semibold shadow-lg ml-8 transition-all"
+          whileHover={{ scale: 1.05, backgroundColor: "red", color: "#fff" }}
+          className="hidden md:block  text-red-600 px-6 py-2 rounded-full font-semibold shadow-lg ml-8 transition-all text-xl"
         >
-          Contact
+        ☏Contact
         </motion.button>
+
+        {/* Profile Icon */}
+<motion.div
+  onClick={() => navigate("/Signin")}
+  whileHover={{ scale: 1.15 }}
+  whileTap={{ scale: 0.95 }}
+  className="hidden md:flex items-center justify-center 
+             ml-7 w-12 h-12 rounded-full 
+             bg-black text-white cursor-pointer 
+             shadow-lg hover:bg-sky-500 transition-all"
+>
+  <FaUserCircle className="text-3xl" />
+</motion.div>
+
       </motion.nav>
     </div>
   );
