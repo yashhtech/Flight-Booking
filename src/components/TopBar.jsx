@@ -10,9 +10,10 @@ const TopBar = ({ show }) => {
   animate={show ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 }}
   transition={{ type: "spring", stiffness: 200, damping: 20 }}
   className="
-    fixed top-0 left-0 w-full px-10 py-2 text-sm
-    bg-blaack
+    fixed top-0 left-0 w-full px-10 py-1 text-sm
+    bg-transparent
     shadow-lg z-50
+    
   "
 >
       <div className="flex justify-between items-center">
@@ -27,7 +28,7 @@ const TopBar = ({ show }) => {
         textShadow: "0 0 10px rgba(16,185,129,0.6)",
       }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="px-4 py-1 bg-green-300 rounded-full  text-gray-500 font-semibold shadow-sm text-xl" >
+      className="px-4 py-1  rounded-full  text-gray-500 font-semibold shadow-sm text-xl" >
     
       {item}
     </motion.span>
@@ -41,7 +42,7 @@ const TopBar = ({ show }) => {
             onClick={() => navigate("/Signin")}
             whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-6 py-2 bg-blue-400 rounded-full  text-white font-semibold shadow-sm text-xl"
+            className="px-5 py-1  rounded-full  text-blue-950 font-semibold shadow-sm text-xl"
           >
             Sign In
           </motion.button>
@@ -50,7 +51,7 @@ const TopBar = ({ show }) => {
             onClick={() => navigate("/Signup")}
             whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-6 py-2 rounded-full bg-pink-500 text-white font-semibold shadow-sm text-xl"
+            className="px-6 py-2 rounded-full  text-blue-950 font-semibold shadow-sm text-xl"
           >
             Sign Up
           </motion.button>

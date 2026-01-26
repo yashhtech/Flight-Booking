@@ -11,7 +11,7 @@ const destinations = [
     city: "Paris",
     country: "France",
     image:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200",
+      "/places/paris.jpg",
     reason:
       '"Romantic streets, timeless art, iconic landmarks and café culture."',
   },
@@ -19,7 +19,7 @@ const destinations = [
     city: "Dubai",
     country: "UAE",
     image:
-      "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?q=80&w=1200",
+      "/places/dubai.jpg",
     reason:
       '"Luxury lifestyle, futuristic skyline and unforgettable desert safaris."',
   },
@@ -127,7 +127,8 @@ const DestinationCard = () => {
             className="group relative rounded-t-[80px] rounded-b-[38px] overflow-hidden
               bg-gradient-to-br from-[#141B2D] to-[#0E1626]
               shadow-[0_30px_60px_rgba(0,0,0,0.6)]
-              w-[280px] flex-shrink-0"
+              w-[280px] flex-shrink-0 
+              hover:scale-110"
           >
             {/* IMAGE */}
             <div className="overflow-hidden">

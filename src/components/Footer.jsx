@@ -14,15 +14,15 @@ import {
 const Footer = () => {
   return (
     <footer
-      className="relative bg-cover bg-center text-white"
+      className="relative bg-cover bg-center text-white -mt-4"
       style={{ backgroundImage: "url('/footer.jpg')" }}
     >
       {/* OVERLAY */}
-      <div className="bg-gradient-to-b from-[#00162e]/90 via-[#000f23]/95 to-black/95 backdrop-blur-md">
+      <div className="bg-gradient-to-b from-[#00162e]/70 via-[#000f23]/95 to-black/95">
 
         {/* BRAND */}
         <div className="max-w-7xl mx-auto px-6 pt-24 text-center">
-          <h2 className="text-4xl font-bold tracking-wide">SkyRoute</h2>
+          <h2 className="text-4xl font-bold tracking-wide hover:text-sky-400">SkyRoute</h2>
           <p className="mt-4 max-w-xl mx-auto text-gray-300">
             Redefining global travel with seamless booking experiences.
           </p>
@@ -31,7 +31,7 @@ const Footer = () => {
             {[FaInstagram, FaLinkedinIn, FaXTwitter].map((Icon, i) => (
               <Icon
                 key={i}
-                className="text-2xl text-gray-300 cursor-pointer transition-all duration-300 hover:text-sky-400 hover:-translate-y-1 hover:scale-110"
+                className="text-5xl text-gray-300 cursor-pointer transition-all duration-300 hover:text-sky-400 hover:-translate-y-1 hover:scale-110"
               />
             ))}
           </div>
@@ -101,10 +101,10 @@ const Footer = () => {
         {/* TRUST BAR */}
         <div className="max-w-7xl mx-auto px-6 mt-20 py-8 border-t border-white/20 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex gap-6 text-3xl text-gray-300">
-            <FaCcVisa />
-            <FaCcMastercard />
-            <FaCcAmex />
-            <FaApplePay />
+            <FaCcVisa className="text-7xl"/>
+            <FaCcMastercard className="text-7xl"/>
+            <FaCcAmex className="text-7xl" />
+            <FaApplePay className="text-8xl" />
           </div>
           <p className="text-sm text-gray-400">
             🔒 SSL Encrypted · IATA Certified · Trusted Worldwide
@@ -115,16 +115,16 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 mt-16 flex flex-wrap justify-between gap-6">
           <div className="flex gap-4">
             <select className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full outline-none">
-              <option>USD</option>
-              <option>EUR</option>
-              <option>GBP</option>
-              <option>INR</option>
+              <option className="text-black">USD</option>
+              <option className="text-black">EUR</option>
+              <option className="text-black">GBP</option>
+              <option className="text-black">INR</option>
             </select>
 
             <select className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full outline-none">
-              <option>English</option>
-              <option>Hindi</option>
-              <option>Español</option>
+              <option className="text-black">English</option>
+              <option className="text-black">Hindi</option>
+              <option className="text-black">Español</option>
             </select>
           </div>
 
