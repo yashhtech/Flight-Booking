@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import TopBar from "../components/TopBar"
 import Navbar from "../components/Navbar"
+import Footer from '../components/Footer'
 
 
 const About = () => {
@@ -16,6 +17,8 @@ return (
     <Navbar />
 
 <div className="text-center py-20">About Flyit Airlines ✈️</div>
+
+<Footer />
 </>
 )
 };

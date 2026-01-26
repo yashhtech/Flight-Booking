@@ -9,7 +9,7 @@ const BestTravelerCard = ({
       className="
         group
         flex flex-col items-center text-center
-        w-[230px] sm:w-[250px]
+        w-[230px] sm:w-[230px]
         rounded-[40px]
         rounded-t-[140px]
         border border-black/5
@@ -23,7 +23,7 @@ const BestTravelerCard = ({
       "
     >
       {/* IMAGE WRAPPER (ROUNDED TOP) */}
-      <div className="relative w-full h-[260px] overflow-visible">
+      <div className="relative w-full h-[260px]  overflow-visible">
         {/* PLACE IMAGE */}
         <div
           className="

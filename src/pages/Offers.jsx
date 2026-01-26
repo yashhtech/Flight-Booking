@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import TopBar from "../components/TopBar"
 import Navbar from "../components/Navbar"
-
+import Footer from '../components/Footer'
 
 const Offers = () => {
 const navigate = useNavigate();
@@ -22,6 +22,7 @@ className="bg-sky-500 px-6 py-3 rounded-full"
 Back to Home
 </button>
 </div>
+<Footer />
  </>
 );
 };
