@@ -14,7 +14,7 @@ import * as THREE from "three"
 import GLOBE from "vanta/dist/vanta.globe.min"
 import MacDock from "../components/MacDock"
 import WhyTravelersLoveUs from "../components/PopularFlights"
-
+import Newsletter from "../components/Newsletter"
 
 
 gsap.registerPlugin(MotionPathPlugin)
@@ -433,21 +433,11 @@ useEffect(() => {
 </section>
 <MacDock />
 <WhyTravelersLoveUs />
-      {/* DESTINATIONS */}
-      <section className="px-12 py-28 bg-[#EDF1F7] text-[#0E1626]">
-        <h2 className="text-4xl font-bold mb-14">
-          Travel to make memories all around the world
-        </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-          <DestinationCard />
-          <DestinationCard />
-          <DestinationCard />
-          <DestinationCard />
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+{/* DESTINATIONS */}
+<DestinationCard />
+ <Newsletter />
+<Footer />
+</div>
   )
 }
 
