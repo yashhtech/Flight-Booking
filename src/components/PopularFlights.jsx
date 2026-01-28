@@ -11,6 +11,7 @@ const points = [
   "Secure & fast payments ",
 ]
 
+
 const images = ["/travelerlove/10112781.jpg", "/travelerlove/world.jpg","/travelerlove/bank.jpg","/travelerlove/passport.jpg","/travelerlove/flight.jpg"]
 
 const WhyTravelersLoveUs = () => {
