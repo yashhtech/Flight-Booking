@@ -15,7 +15,7 @@ import GLOBE from "vanta/dist/vanta.globe.min"
 import MacDock from "../components/MacDock"
 import WhyTravelersLoveUs from "../components/PopularFlights"
 import Newsletter from "../components/Newsletter"
-
+import AutoSuggestInput from "../components/AutoSuggestInput"
 
 gsap.registerPlugin(MotionPathPlugin)
 gsap.registerPlugin(ScrollTrigger)
@@ -158,17 +158,17 @@ useEffect(() => {
   vantaEffect.current = GLOBE({
     el: globeRef.current,
     THREE,
-    mouseControls: true,
-    touchControls: true,
+    mouseControls: false,
+    touchControls: false,
     gyroControls: false,
     minHeight: 300,
     minWidth: 300,
     scale: 1,
     scaleMobile: 1,
-    color: 0x2a16d4,
-    color2: 0x6a5cff,
-    size: 1.17,
-    backgroundColor: 0xe5e5ff,
+    color: 0xff3f81,
+    color2: 0xffffff,
+    size: 1.10,
+    backgroundColor: 0x111111,
   })
 
   return () => {
@@ -278,7 +278,7 @@ useEffect(() => {
 
       {/* ================= SEARCH (HALF OVERLAP FIXED) ================= */}
       <section className="relative z-30 px-6 -mt-27">
-        <div className="mx-auto max-w-6xl bg-white rounded-[50px] shadow border-b-black-4 p-5 text-gray-800 transition-transform duration-500 ease-in-out hover:scale-105">
+        <div className="mx-auto max-w-6xl bg-gray-300 rounded-[50px] shadow border-b-black-4 p-5 text-gray-800 transition-transform duration-500 ease-in-out hover:scale-105">
 
           {/* TRIP TYPE */}
           <div className="flex gap-3 mb-6 bg-gray-100 rounded-full p-2   w-fit ml-90"> 
@@ -300,10 +300,10 @@ useEffect(() => {
           {/* ROW 1 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
-              <input
+              <AutoSuggestInput
                 placeholder="📍 Source"
                 value={origin}
-                onChange={e => setOrigin(e.target.value)}
+                onChange={setOrigin}
                 className="w-full px-4 py-3 rounded-full border-2 font-semibold
                 hover:border-blue-500 focus:ring-2 focus:ring-blue-500 transition"
               />
@@ -319,10 +319,10 @@ useEffect(() => {
             </div>
 
             <div>
-              <input
+              <AutoSuggestInput
                 placeholder="📍 Destination"
                 value={destination}
-                onChange={e => setDestination(e.target.value)}
+                onChange={setDestination}
                 className="w-full px-4 py-3 rounded-full border-2 font-semibold
                 hover:border-blue-500 transition"
               />
@@ -388,7 +388,7 @@ useEffect(() => {
    <div className="relative z-10">
    <h2
     ref={travelersTitleRef}
-    className="text-5xl font-bold text-center mb-14 font-serif pb-25 pt-35"
+    className="text-5xl font-bold text-center mb-14 text-amber-50 font-serif pb-25 pt-35"
   >
     Best Travelers Of This Month
   </h2>

@@ -134,49 +134,49 @@ const affordableDeals = [
     city: "Lisbon, Portugal",
     from: "NYC",
     price: 289,
-    img: "/src/assets/lisbon.jpg",
+    img: "/offers/portugal.jpg",
   },
   {
     city: "Prague, Czech",
     from: "Chicago",
     price: 319,
-    img: "/src/assets/prague.jpg",
+    img: "/offers/czech.jpg",
   },
   {
     city: "Mexico City",
     from: "LA",
     price: 199,
-    img: "/src/assets/mexico.jpg",
+    img: "/offers/mexico.jpg",
   },
   {
     city: "Budapest, Hungary",
     from: "Boston",
     price: 339,
-    img: "/src/assets/budapest.jpg",
+    img: "/offers/hungary.jpg",
   },
   {
     city: "Marrakech",
     from: "Miami",
     price: 379,
-    img: "/src/assets/marrakech.jpg",
+    img: "/offers/miami.jpg",
   },
   {
     city: "Krakow, Poland",
     from: "NYC",
     price: 299,
-    img: "/src/assets/krakow.jpg",
+    img: "/offers/poland.jpg",
   },
   {
     city: "Athens, Greece",
     from: "JFK",
     price: 349,
-    img: "/src/assets/athens.jpg",
+    img: "/offers/greece.jpg",
   },
   {
     city: "Istanbul, Turkey",
     from: "Chicago",
     price: 389,
-    img: "/src/assets/istanbul.jpg",
+    img: "/offers/turkey.jpg",
   },
 ]
 
@@ -615,7 +615,7 @@ const visibleDeals = showAll ? filteredDeals : filteredDeals.slice(0, 3)
 
                 <div className="mt-3 flex items-center justify-between">
                   <div>
-                    <p className="text-blue-600 font-extrabold text-lg">
+                    <p className=" font-extrabold text-lg">
                       ${d.price}
                     </p>
                     <p className="text-xs text-gray-400">
@@ -623,7 +623,7 @@ const visibleDeals = showAll ? filteredDeals : filteredDeals.slice(0, 3)
                     </p>
                   </div>
 
-                  <button className="bg-yellow-300 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-lg transition">
+                  <button className="bg-fuchsia-400 hover:bg-fuchsia-500 text-white text-xs px-4 py-2 rounded-lg transition">
                     View
                   </button>
                 </div>
@@ -710,12 +710,15 @@ const visibleDeals = showAll ? filteredDeals : filteredDeals.slice(0, 3)
                 </p>
               </div>
 
-              <button 
-              onClick={() => navigate("/Signin")}
-
-              className="bg-yellow-300 hover:bg-yellow-300 text-white px-6 py-3 rounded-xl transition">
-                Book Package
-              </button>
+              <button
+              onClick={() => {
+              alert("Login is required")
+               navigate("/Signin")
+               }}
+               className="bg-yellow-300 hover:bg-yellow-300 text-white px-6 py-3 rounded-xl transition"
+                >
+               Book Package
+               </button>
             </div>
           </motion.div>
 
