@@ -5,6 +5,7 @@ import TopBar from "../components/TopBar"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
+
 const marquee = {
   animate: {
     x: [0, -2000],
@@ -18,6 +19,7 @@ const About = () => {
   useEffect(() => {
     document.title = "SkyRoute – About"
   }, [])
+
 
   return (
     <>
@@ -46,18 +48,19 @@ const About = () => {
             Fly Beyond Borders
           </motion.h1>
 
-          <motion.p
+
+           <motion.p
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
             className="mt-8 max-w-4xl text-xl md:text-2xl text-gray-200"
-          >
+           >
             SkyRoute is not just travel. It’s a premium global aviation experience.
           </motion.p>
         </div>
-      </section>
+       </section>
 
-      {/* INFINITE LOGO / TEXT SCROLL */}
+       {/* INFINITE LOGO / TEXT SCROLL */}
       <section className="overflow-hidden bg-gray-500 py-10">
         <motion.div
           variants={marquee}

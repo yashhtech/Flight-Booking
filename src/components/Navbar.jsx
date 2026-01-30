@@ -15,7 +15,7 @@ const Navbar = () => {
     { label: "Home", href: "/", icon: "✈︎" },
     { label: "About", href: "/about", icon: "ⓘ" },
     { label: "Offers", href: "/offers", icon: "$" },
-    { label: "Destinations", href: "/destinations", icon: "🗺" },
+    // { label: "Destinations", href: "/destinations", icon: "🗺" },
   ];
 
   useEffect(() => {

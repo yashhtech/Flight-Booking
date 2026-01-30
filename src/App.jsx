@@ -5,6 +5,7 @@ import Offers from "./pages/Offers"
 import Destinations from "./pages/Destinations"
 import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
+import Contact from "./pages/Contact"
 const App = () => {
   return (
    
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/destinations" element={<Destinations />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Auth Pages */}
         <Route path="/signin" element={<Signin />} />
