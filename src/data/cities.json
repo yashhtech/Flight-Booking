@@ -1,0 +1,71 @@
+[
+  { "city": "Delhi", "country": "India", "code": "DEL" },
+  { "city": "Mumbai", "country": "India", "code": "BOM" },
+  { "city": "Bangalore", "country": "India", "code": "BLR" },
+  { "city": "Hyderabad", "country": "India", "code": "HYD" },
+  { "city": "Chennai", "country": "India", "code": "MAA" },
+  { "city": "Kolkata", "country": "India", "code": "CCU" },
+  { "city": "Pune", "country": "India", "code": "PNQ" },
+  { "city": "Ahmedabad", "country": "India", "code": "AMD" },
+  { "city": "Jaipur", "country": "India", "code": "JAI" },
+  { "city": "Lucknow", "country": "India", "code": "LKO" },
+  { "city": "Chandigarh", "country": "India", "code": "IXC" },
+  { "city": "Indore", "country": "India", "code": "IDR" },
+  { "city": "Bhopal", "country": "India", "code": "BHO" },
+  { "city": "Patna", "country": "India", "code": "PAT" },
+  { "city": "Ranchi", "country": "India", "code": "IXR" },
+  { "city": "Guwahati", "country": "India", "code": "GAU" },
+  { "city": "Srinagar", "country": "India", "code": "SXR" },
+  { "city": "Jammu", "country": "India", "code": "IXJ" },
+  { "city": "Amritsar", "country": "India", "code": "ATQ" },
+  { "city": "Varanasi", "country": "India", "code": "VNS" },
+
+  { "city": "Dubai", "country": "UAE", "code": "DXB" },
+  { "city": "Abu Dhabi", "country": "UAE", "code": "AUH" },
+  { "city": "Sharjah", "country": "UAE", "code": "SHJ" },
+
+  { "city": "London", "country": "United Kingdom", "code": "LHR" },
+  { "city": "Manchester", "country": "United Kingdom", "code": "MAN" },
+  { "city": "Birmingham", "country": "United Kingdom", "code": "BHX" },
+
+  { "city": "Paris", "country": "France", "code": "CDG" },
+  { "city": "Nice", "country": "France", "code": "NCE" },
+  { "city": "Marseille", "country": "France", "code": "MRS" },
+
+  { "city": "New York", "country": "USA", "code": "JFK" },
+  { "city": "Los Angeles", "country": "USA", "code": "LAX" },
+  { "city": "Chicago", "country": "USA", "code": "ORD" },
+  { "city": "San Francisco", "country": "USA", "code": "SFO" },
+  { "city": "Dallas", "country": "USA", "code": "DFW" },
+
+  { "city": "Toronto", "country": "Canada", "code": "YYZ" },
+  { "city": "Vancouver", "country": "Canada", "code": "YVR" },
+
+  { "city": "Sydney", "country": "Australia", "code": "SYD" },
+  { "city": "Melbourne", "country": "Australia", "code": "MEL" },
+
+  { "city": "Singapore", "country": "Singapore", "code": "SIN" },
+  { "city": "Bangkok", "country": "Thailand", "code": "BKK" },
+  { "city": "Kuala Lumpur", "country": "Malaysia", "code": "KUL" },
+
+  { "city": "Tokyo", "country": "Japan", "code": "HND" },
+  { "city": "Osaka", "country": "Japan", "code": "KIX" },
+
+  { "city": "Seoul", "country": "South Korea", "code": "ICN" },
+  { "city": "Beijing", "country": "China", "code": "PEK" },
+  { "city": "Shanghai", "country": "China", "code": "PVG" },
+
+  { "city": "Doha", "country": "Qatar", "code": "DOH" },
+  { "city": "Riyadh", "country": "Saudi Arabia", "code": "RUH" },
+  { "city": "Jeddah", "country": "Saudi Arabia", "code": "JED" },
+
+  { "city": "Istanbul", "country": "Turkey", "code": "IST" },
+  { "city": "Rome", "country": "Italy", "code": "FCO" },
+  { "city": "Milan", "country": "Italy", "code": "MXP" },
+
+  { "city": "Frankfurt", "country": "Germany", "code": "FRA" },
+  { "city": "Munich", "country": "Germany", "code": "MUC" },
+
+  { "city": "Madrid", "country": "Spain", "code": "MAD" },
+  { "city": "Barcelona", "country": "Spain", "code": "BCN" }
+]

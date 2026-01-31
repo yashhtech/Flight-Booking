@@ -75,9 +75,13 @@ const Signup = () => {
 
     // SAVE TO LOCAL STORAGE
     localStorage.setItem(
-      "flightUser",
-      JSON.stringify(formData)
-    );
+  "flightUser",
+  JSON.stringify({
+    ...formData,
+    isLoggedIn: false,
+    bookings: []
+  })
+)
 
     // SHOW SUCCESS ALERT
     setShowSuccess(true);

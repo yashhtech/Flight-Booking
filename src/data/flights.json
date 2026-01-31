@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "from": "Delhi",
+    "to": "Mumbai",
+    "airline": "IndiGo",
+    "price": 4500,
+    "duration": "2h 10m"
+  },
+  {
+    "id": 2,
+    "from": "Delhi",
+    "to": "Bangalore",
+    "airline": "Air India",
+    "price": 6200,
+    "duration": "2h 45m"
+  }
+]

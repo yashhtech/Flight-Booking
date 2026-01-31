@@ -26,18 +26,23 @@ const Signin = () => {
 
     const savedUser = JSON.parse(localStorage.getItem("flightUser"));
 
-    if (
-      savedUser &&
-      savedUser.email === formData.email &&
-      savedUser.password === formData.password
-    ) {
-      setShowSuccess(true);
+    if (savedUser && savedUser.email === formData.email && savedUser.password === formData.password) {
 
-      setTimeout(() => {
-        setShowSuccess(false);
-        window.location.href = "/"; // HOME PAGE
-      }, 2000);
-    } else {
+  localStorage.setItem(
+    "flightUser",
+    JSON.stringify({
+      ...savedUser,
+      isLoggedIn: true
+    })
+  )
+
+  setShowSuccess(true)
+
+  setTimeout(() => {
+    navigate("/profile")
+  }, 2000)
+}
+ else {
       setError("Invalid email or password");
     }
   };

@@ -1,0 +1,14 @@
+{
+  "meals": [
+    { "id": "veg", "name": "Veg Meal", "price": 250 },
+    { "id": "nonveg", "name": "Non-Veg Meal", "price": 350 }
+  ],
+  "snacks": [
+    { "id": "chips", "name": "Chips", "price": 100 },
+    { "id": "sandwich", "name": "Sandwich", "price": 150 }
+  ],
+  "drinks": [
+    { "id": "water", "name": "Water", "price": 50 },
+    { "id": "juice", "name": "Juice", "price": 120 }
+  ]
+}
