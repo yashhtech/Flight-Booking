@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
-import mealsData from "../data/meals.json"
 
 const Passengers = () => {
   const { state } = useLocation()

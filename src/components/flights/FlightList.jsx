@@ -1,32 +1,59 @@
-import flights from "../../data/flights.json"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import FlightCard from "./FlightCard"
 
-const FlightList = ({ from, to }) => {
-  const navigate = useNavigate()
+const sections = [
+  { title: "🔥 Trending Flights", type: "trending", bg: "bg-rose-100" },
+  { title: "💸 Economy Flights", type: "economy", bg: "bg-emerald-100" },
+  { title: "🇮🇳 National Flights", type: "national", bg: "bg-sky-100" },
+  { title: "🌍 International Flights", type: "international", bg: "bg-violet-100" }
+]
 
-  const filtered = flights.filter(
-    f => f.from.toLowerCase().includes(from.toLowerCase())
-      && f.to.toLowerCase().includes(to.toLowerCase())
-  )
+const FlightList = () => {
+  const [flightsData, setFlightsData] = useState([])
+  const [search, setSearch] = useState("")
+
+  useEffect(() => {
+  fetch("http://localhost:3001/flights")
+    .then(res => res.json())
+    .then(data => {
+      console.log("Flights fetched:", data)
+      setFlightsData(data)
+    })
+    .catch(err => console.log("Error fetching flights:", err))
+}, [])
+
 
   return (
-    <div className="mt-6 space-y-4">
-      {filtered.map(f => (
-        <div key={f.id} className="p-4 bg-slate-100 rounded flex justify-between">
-          <div>
-            <h3 className="font-bold">{f.airline}</h3>
-            <p>{f.from} → {f.to}</p>
+    <div className="space-y-16">
+      {sections.map(sec => (
+        <section
+          key={sec.type}
+          className={`${sec.bg} p-6 rounded-3xl shadow-inner`}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <h2 className="text-2xl font-bold">{sec.title}</h2>
+            <input
+              type="text"
+              placeholder="Search destination..."
+              className="px-4 py-2 rounded-full outline-none shadow"
+              onChange={e => setSearch(e.target.value)}
+            />
           </div>
-          <div>
-            <p>₹{f.price}</p>
-            <button
-              onClick={() => navigate(`/seats/${f.id}`)}
-              className="mt-2 px-4 py-2 bg-green-500 text-white rounded"
-            >
-              Select
-            </button>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-slideUp">
+            {flightsData
+              .filter(
+                f =>
+                  f.type === sec.type &&
+                  (f.from.toLowerCase().includes(search.toLowerCase()) ||
+                    f.to.toLowerCase().includes(search.toLowerCase()))
+              )
+              .slice(0, 8)
+              .map(flight => (
+                <FlightCard key={flight.id} flight={flight} />
+              ))}
           </div>
-        </div>
+        </section>
       ))}
     </div>
   )

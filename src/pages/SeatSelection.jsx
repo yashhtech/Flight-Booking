@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from "react-router-dom"
-import seatsData from "../data/seats.json"
 import { useState } from "react"
 
 const SeatSelection = () => {

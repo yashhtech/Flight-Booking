@@ -1,241 +1,250 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import cities from "../../data/cities.json";
-import FlightList from "./FlightList";
+import { useState, useEffect } from "react";
+import { Plane, Users, ChevronDown, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const API_KEY = import.meta.env.VITE_GBDB_API_KEY;
+/* ===== DESTINATIONS DATA ===== */
+const destinations = [
+  { name: "Santorini, Greece", image: "/offers/greece.jpg" },
+  { name: "Bali, Indonesia", image: "/offers/bali.jpg" },
+  { name: "Maldives", image: "/offers/maldives.jpg" },
+  { name: "Kyoto, Japan", image: "/offers/japan.jpg" },
+  { name: "Paris, France", image: "/offers/poland.jpg" },
+];
 
-const FlightSearch = () => {
-  const [tripType, setTripType] = useState("national");
-  const [journeyType, setJourneyType] = useState("oneway");
+const FlightSearchBox = () => {
+  /* ===== BACKGROUND SLIDER STATE ===== */
+  const [activeBg, setActiveBg] = useState(0);
 
-  const [legs, setLegs] = useState([
-    { from: "", to: "", fromList: [], toList: [], date: "" },
-  ]);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveBg((prev) => (prev + 1) % destinations.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
+  /* ===== FORM STATE ===== */
+  const [tripType, setTripType] = useState("roundtrip");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [departDate, setDepartDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState(1);
-  const [travelClass, setTravelClass] = useState("Economy");
-  const [showResults, setShowResults] = useState(false);
-
-  // 🌍 API city fetch
-  const fetchCities = async (query, setter) => {
-    if (query.length < 2) return setter([]);
-    try {
-      const res = await fetch(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}&limit=5`,
-        {
-          headers: {
-            "X-RapidAPI-Key": API_KEY,
-            "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-          },
-        }
-      );
-      const data = await res.json();
-      setter(data.data || []);
-    } catch {
-      setter([]);
-    }
-  };
-
-  const filterIndianCities = (query, setter) => {
-    if (!query) return setter([]);
-    setter(
-      cities
-        .filter((c) => c.city.toLowerCase().includes(query.toLowerCase()))
-        .slice(0, 6)
-    );
-  };
-
-  const updateLeg = (i, key, value) => {
-    const copy = [...legs];
-    copy[i][key] = value;
-    setLegs(copy);
-  };
-
-  const addLeg = () => {
-    setLegs([...legs, { from: "", to: "", fromList: [], toList: [], date: "" }]);
-  };
-
-  const removeLeg = (i) => {
-    if (legs.length === 1) return;
-    setLegs(legs.filter((_, idx) => idx !== i));
-  };
+  const [travelClass, setTravelClass] = useState("economy");
+  const [showPassengers, setShowPassengers] = useState(false);
+  const [showClass, setShowClass] = useState(false);
 
   const handleSearch = () => {
-    for (let leg of legs) {
-      if (!leg.from || !leg.to || !leg.date) {
-        alert("Please fill all fields");
-        return;
-      }
-      if (leg.from === leg.to) {
-        alert("From & To cannot be same");
-        return;
-      }
-    }
-    setShowResults(true);
+    console.log({
+      tripType,
+      from,
+      to,
+      departDate,
+      returnDate,
+      passengers,
+      travelClass,
+    });
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
-      style={{
-        backgroundImage: "url('bg.jpg')",
-      }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full  bg-transparent rounded-3xl p-8"
-      >
-        {/* HEADER */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Flight Search
-        </h1>
-
-        {/* TRIP TYPE */}
-        <div className="flex gap-4 border-b pb-4 mb-6">
-          {["oneway", "round", "multi"].map((j) => (
-            <button
-              key={j}
-              onClick={() => {
-                setJourneyType(j);
-                setLegs([{ from: "", to: "", fromList: [], toList: [], date: "" }]);
-              }}
-              className={`px-5 py-2 rounded-md font-semibold transition
-                ${
-                  journeyType === j
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }
-              `}
-            >
-              {j === "oneway" && "One Way"}
-              {j === "round" && "Round Trip"}
-              {j === "multi" && "Multi City"}
-            </button>
-          ))}
-        </div>
-
-        {/* FLIGHT LEGS */}
-        {legs.map((leg, i) => (
-          <div
-            key={i}
-            className="grid md:grid-cols-3 gap-4 mb-4 relative"
-          >
-            {/* FROM */}
-            <div>
-              <label className="text-sm text-gray-500">FROM</label>
-              <input
-                className="w-full border rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter city"
-                value={leg.from}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  updateLeg(i, "from", val);
-                  tripType === "international"
-                    ? fetchCities(val, (l) => updateLeg(i, "fromList", l))
-                    : filterIndianCities(val, (l) =>
-                        updateLeg(i, "fromList", l)
-                      );
-                }}
-              />
-            </div>
-
-            {/* TO */}
-            <div>
-              <label className="text-sm text-gray-500">TO</label>
-              <input
-                className="w-full border rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter city"
-                value={leg.to}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  updateLeg(i, "to", val);
-                  tripType === "international"
-                    ? fetchCities(val, (l) => updateLeg(i, "toList", l))
-                    : filterIndianCities(val, (l) =>
-                        updateLeg(i, "toList", l)
-                      );
-                }}
-              />
-            </div>
-
-            {/* DATE */}
-            <div>
-              <label className="text-sm text-gray-500">DEPART</label>
-              <input
-                type="date"
-                className="w-full border rounded-md px-4 py-3"
-                value={leg.date}
-                onChange={(e) => updateLeg(i, "date", e.target.value)}
-              />
-            </div>
-
-            {journeyType === "multi" && (
-              <button
-                onClick={() => removeLeg(i)}
-                className="absolute -right-3 top-6 text-red-500"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        ))}
-
-        {journeyType === "multi" && (
-          <button
-            onClick={addLeg}
-            className="text-blue-600 font-semibold mb-6"
-          >
-            + Add another city
-          </button>
-        )}
-
-        {/* PASSENGERS */}
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <select
-            className="border px-4 py-3 rounded-md"
-            value={passengers}
-            onChange={(e) => setPassengers(e.target.value)}
-          >
-            {[1, 2, 3, 4, 5].map((n) => (
-              <option key={n}>{n} Passenger</option>
-            ))}
-          </select>
-
-          <select
-            className="border px-4 py-3 rounded-md"
-            value={travelClass}
-            onChange={(e) => setTravelClass(e.target.value)}
-          >
-            <option>Economy</option>
-            <option>Business</option>
-            <option>First Class</option>
-          </select>
-        </div>
-
-        {/* SEARCH */}
-        <button
-          onClick={handleSearch}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-md font-bold text-lg"
+    <section className="min-h-screen relative overflow-hidden">
+      {/* ===== BACKGROUND : INSTANT RIGHT SWITCH ===== */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={activeBg}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${destinations[activeBg].image})`,
+          }}
+          initial={{ x: "100%" }}
+          animate={{ x: "0%" }}
+          exit={{ x: "-100%" }}
+          transition={{
+            duration: 0.35,
+            ease: "easeOut",
+          }}
         >
-          Search Flights
-        </button>
-
-        {showResults && (
-          <div className="mt-8">
-            <FlightList
-              legs={legs}
-              passengers={passengers}
-              travelClass={travelClass}
-              tripType={tripType}
-              journeyType={journeyType}
-            />
+          {/* PLACE NAME */}
+          <div className="absolute top-8 left-8 bg-black/40 text-white px-6 py-3 rounded-full text-lg font-semibold backdrop-blur-md">
+            {destinations[activeBg].name}
           </div>
-        )}
-      </motion.div>
-    </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* ===== CONTENT ===== */}
+      <div className="relative z-20 min-h-screen flex items-center justify-center px-4">
+        <div className="w-full max-w-6xl">
+          {/* HEADING */}
+          <div className="text-center mb-10">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white">
+              Book Your Next Journey
+            </h1>
+            <p className="text-white/80 mt-3 text-lg">
+              Explore the world with comfort, class & confidence
+            </p>
+          </div>
+
+          {/* SEARCH CARD */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-4xl p-6 md:p-10 border border-white/20 shadow-2xl">
+            {/* TRIP TYPE */}
+            <div className="flex justify-center gap-4 mb-6">
+              {["roundtrip", "oneway"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setTripType(type)}
+                  className={`px-6 py-2 rounded-full font-semibold transition ${
+                    tripType === type
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white/20 text-white hover:bg-white/30"
+                  }`}
+                >
+                  {type === "roundtrip" ? "Round Trip" : "One Way"}
+                </button>
+              ))}
+            </div>
+
+            {/* INPUTS */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Input label="From" value={from} setValue={setFrom} icon={<Plane />} />
+              <Input label="To" value={to} setValue={setTo} icon={<ArrowRight />} />
+              <DateInput label="Departure" value={departDate} setValue={setDepartDate} />
+              <DateInput
+                label="Return"
+                value={returnDate}
+                setValue={setReturnDate}
+                disabled={tripType === "oneway"}
+              />
+            </div>
+
+            {/* BOTTOM ROW */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-6">
+              {/* PASSENGERS */}
+              <div className="relative md:col-span-3">
+                <Label text="Passengers" />
+                <button
+                  onClick={() => setShowPassengers(!showPassengers)}
+                  className="glass-input flex justify-between"
+                >
+                  <span className="flex items-center gap-2">
+                    <Users size={18} /> {passengers}
+                  </span>
+                  <ChevronDown />
+                </button>
+
+                <AnimatePresence>
+                  {showPassengers && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="dropdown"
+                    >
+                      <button onClick={() => setPassengers(Math.max(1, passengers - 1))}>
+                        −
+                      </button>
+                      <span>{passengers}</span>
+                      <button onClick={() => setPassengers(passengers + 1)}>+</button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* CLASS */}
+              <div className="relative md:col-span-3">
+                <Label text="Class" />
+                <button
+                  onClick={() => setShowClass(!showClass)}
+                  className="glass-input flex justify-between capitalize"
+                >
+                  {travelClass} <ChevronDown />
+                </button>
+
+                <AnimatePresence>
+                  {showClass && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="dropdown"
+                    >
+                      {["economy", "business", "first class"].map((cls) => (
+                        <button
+                          key={cls}
+                          onClick={() => {
+                            setTravelClass(cls);
+                            setShowClass(false);
+                          }}
+                        >
+                          {cls}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* SEARCH */}
+              <motion.button
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSearch}
+                className="md:col-span-6 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white rounded-xl font-bold text-lg py-3 flex items-center justify-center gap-3 shadow-xl"
+              >
+                <Plane /> Search Flights
+              </motion.button>
+            </div>
+          </div>
+
+          {/* DOT INDICATOR */}
+          <div className="flex justify-center gap-3 mt-6">
+            {destinations.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveBg(i)}
+                className={`h-2.5 w-2.5 rounded-full transition ${
+                  activeBg === i ? "bg-white" : "bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default FlightSearch;
+/* ===== REUSABLE UI ===== */
+const Label = ({ text }) => (
+  <label className="text-white/80 text-sm font-medium mb-1 block">{text}</label>
+);
+
+const Input = ({ label, value, setValue, icon }) => (
+  <div>
+    <Label text={label} />
+    <div className="relative">
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="City or airport"
+        className="glass-input"
+      />
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70">
+        {icon}
+      </span>
+    </div>
+  </div>
+);
+
+const DateInput = ({ label, value, setValue, disabled }) => (
+  <div>
+    <Label text={label} />
+    <input
+      type="date"
+      value={value}
+      disabled={disabled}
+      onChange={(e) => setValue(e.target.value)}
+      className="glass-input"
+    />
+  </div>
+);
+
+export default FlightSearchBox;
