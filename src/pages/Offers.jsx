@@ -18,7 +18,10 @@ import TopBar from "../components/TopBar"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
+
+
 /* ===================== DATA ===================== */
+
 
 const categories = [
   { id: "flash", title: "Flash Sales", icon: <FaFire />, gradient: "from-pink-500 to-rose-500", count: 156 },
@@ -26,6 +29,7 @@ const categories = [
   { id: "premium", title: "Premium", icon: <FaCrown />, gradient: "from-purple-500 to-indigo-500", count: 42 },
   { id: "multi", title: "Multi-City", icon: <FaGlobe />, gradient: "from-emerald-500 to-green-500", count: 67 },
 ]
+
 
 
 const deals = [
