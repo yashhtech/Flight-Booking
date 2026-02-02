@@ -11,7 +11,7 @@ const destinations = [
   { name: "Paris, France", image: "/offers/poland.jpg" },
 ];
 
-const FlightSearchBox = () => {
+const FlightSearchBox = ({ onSearch }) => {
   /* ===== BACKGROUND SLIDER STATE ===== */
   const [activeBg, setActiveBg] = useState(0);
 
@@ -33,37 +33,34 @@ const FlightSearchBox = () => {
   const [showPassengers, setShowPassengers] = useState(false);
   const [showClass, setShowClass] = useState(false);
 
+  /* 🔍 SEARCH HANDLER (ADDED – SAFE) */
   const handleSearch = () => {
-    console.log({
-      tripType,
+    if (!from || !to || !departDate) return;
+
+    onSearch({
       from,
       to,
       departDate,
       returnDate,
       passengers,
       travelClass,
+      tripType,
     });
   };
 
   return (
     <section className="min-h-screen relative overflow-hidden">
-      {/* ===== BACKGROUND : INSTANT RIGHT SWITCH ===== */}
+      {/* ===== BACKGROUND ===== */}
       <AnimatePresence initial={false}>
         <motion.div
           key={activeBg}
           className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${destinations[activeBg].image})`,
-          }}
+          style={{ backgroundImage: `url(${destinations[activeBg].image})` }}
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "-100%" }}
-          transition={{
-            duration: 0.35,
-            ease: "easeOut",
-          }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
         >
-          {/* PLACE NAME */}
           <div className="absolute top-8 left-8 bg-black/40 text-white px-6 py-3 rounded-full text-lg font-semibold backdrop-blur-md">
             {destinations[activeBg].name}
           </div>
@@ -138,9 +135,7 @@ const FlightSearchBox = () => {
                       exit={{ opacity: 0, y: -10 }}
                       className="dropdown"
                     >
-                      <button onClick={() => setPassengers(Math.max(1, passengers - 1))}>
-                        −
-                      </button>
+                      <button onClick={() => setPassengers(Math.max(1, passengers - 1))}>−</button>
                       <span>{passengers}</span>
                       <button onClick={() => setPassengers(passengers + 1)}>+</button>
                     </motion.div>

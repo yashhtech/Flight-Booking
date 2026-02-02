@@ -1,16 +1,19 @@
 import { useState } from "react"
-import { Mail, Phone, Pencil } from "lucide-react"
+import { Mail, Phone, Pencil, Camera } from "lucide-react"
 
 const ProfileHeader = ({ user, setUser }) => {
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(user)
 
   const handleSave = () => {
-    localStorage.setItem("flightUser", JSON.stringify({
+    const updatedUser = {
       ...form,
-      isLoggedIn: true
-    }))
-    setUser(form)
+      isLoggedIn: true,
+      joinedAt: form.joinedAt || new Date().toISOString()
+    }
+
+    localStorage.setItem("flightUser", JSON.stringify(updatedUser))
+    setUser(updatedUser)
     setOpen(false)
   }
 
@@ -20,6 +23,22 @@ const ProfileHeader = ({ user, setUser }) => {
     .join("")
     .toUpperCase()
 
+  const joinedDate = user.joinedAt
+    ? new Date(user.joinedAt).toDateString()
+    : "—"
+
+  // IMAGE UPLOAD
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setForm({ ...form, photo: reader.result })
+    }
+    reader.readAsDataURL(file)
+  }
+
   return (
     <>
       {/* HEADER CARD */}
@@ -27,13 +46,29 @@ const ProfileHeader = ({ user, setUser }) => {
 
         {/* LEFT */}
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold">
-            {initials}
+          
+          {/* PROFILE PIC */}
+          <div className="relative">
+            {user.photo ? (
+              <img
+                src={user.photo}
+                alt="profile"
+                className="w-20 h-20 rounded-2xl object-cover border-2 border-white"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold">
+                {initials}
+              </div>
+            )}
           </div>
 
           <div>
             <h2 className="text-3xl font-bold">{user.fullName}</h2>
             <p className="opacity-90 mt-1">Frequent Traveler</p>
+
+            <p className="text-sm opacity-80 mt-1">
+              Joined on: {joinedDate}
+            </p>
 
             <div className="flex gap-6 mt-4 text-sm flex-wrap">
               <span className="flex items-center gap-2">
@@ -62,6 +97,18 @@ const ProfileHeader = ({ user, setUser }) => {
           <div className="bg-white p-6 rounded-2xl w-full max-w-md">
 
             <h3 className="text-xl font-bold mb-4">Edit Profile</h3>
+
+            {/* PHOTO UPLOAD */}
+            <label className="flex items-center gap-3 mb-4 cursor-pointer">
+              <Camera />
+              <span className="text-sm text-blue-600">Change Profile Photo</span>
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleImageUpload}
+              />
+            </label>
 
             <input
               className="w-full border p-3 rounded mb-3"

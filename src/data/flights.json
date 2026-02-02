@@ -15,7 +15,8 @@
     "arrival": "10:10 AM",
     "duration": "2h 10m",
     "price": 5200,
-    "discount": 20
+    "discount": 20,
+    "logo": "/logos/indigo.jpg"
   },
   {
     "id": 2,
@@ -36,12 +37,13 @@
     "from": "Mumbai",
     "to": "Bangalore",
     "image": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338",
-    "airline": "Akasa Air",
+    "airline": "Qatar Airways",
     "departure": "07:45 AM",
     "arrival": "09:30 AM",
     "duration": "1h 45m",
     "price": 4800,
-    "discount": 15
+    "discount": 15,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 4,
@@ -67,7 +69,8 @@
     "arrival": "12:20 PM",
     "duration": "1h 20m",
     "price": 3900,
-    "discount": 10
+    "discount": 10,
+    "logo": "/logos/indigo.jpg"
   },
   {
     "id": 6,
@@ -88,12 +91,13 @@
     "from": "Pune",
     "to": "Delhi",
     "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da",
-    "airline": "Vistara",
+    "airline": "Qatar Airways",
     "departure": "05:30 PM",
     "arrival": "07:45 PM",
     "duration": "2h 15m",
     "price": 5400,
-    "discount": 17
+    "discount": 17,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 8,
@@ -106,7 +110,8 @@
     "arrival": "07:20 AM",
     "duration": "1h 20m",
     "price": 3100,
-    "discount": 14
+    "discount": 14,
+    "logo": "/logos/indigo.jpg"
   },
 
 
@@ -129,12 +134,13 @@
     "from": "Indore",
     "to": "Mumbai",
     "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-    "airline": "Akasa Air",
+    "airline": "Qatar Airways",
     "departure": "09:20 AM",
     "arrival": "10:40 AM",
     "duration": "1h 20m",
     "price": 2700,
-    "discount": 20
+    "discount": 20,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 11,
@@ -160,7 +166,8 @@
     "arrival": "05:00 PM",
     "duration": "1h 30m",
     "price": 3100,
-    "discount": 12
+    "discount": 12,
+    "logo": "/logos/indigo.jpg"
   },
   {
     "id": 13,
@@ -181,12 +188,13 @@
     "from": "Lucknow",
     "to": "Mumbai",
     "image": "https://images.unsplash.com/photo-1494475673543-6a6a27143b22",
-    "airline": "Akasa Air",
+    "airline": "Qatar Airways",
     "departure": "10:00 AM",
     "arrival": "12:15 PM",
     "duration": "2h 15m",
     "price": 3600,
-    "discount": 16
+    "discount": 16,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 15,
@@ -212,7 +220,8 @@
     "arrival": "09:35 AM",
     "duration": "50m",
     "price": 2100,
-    "discount": 8
+    "discount": 8,
+    "logo": "/logos/indigo.jpg"
   },
 
 
@@ -222,12 +231,13 @@
     "from": "Delhi",
     "to": "Chennai",
     "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7",
-    "airline": "Vistara",
+    "airline": "Qatar Airways",
     "departure": "09:00 AM",
     "arrival": "11:45 AM",
     "duration": "2h 45m",
     "price": 6200,
-    "discount": 20
+    "discount": 20,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 18,
@@ -240,7 +250,8 @@
     "arrival": "08:45 AM",
     "duration": "2h 15m",
     "price": 5800,
-    "discount": 15
+    "discount": 15,
+    "logo": "/logos/indigo.jpg"
   },
   {
     "id": 19,
@@ -279,7 +290,8 @@
     "arrival": "03:30 PM",
     "duration": "2h",
     "price": 5400,
-    "discount": 12
+    "discount": 12,
+    "logo": "/logos/indigo.jpg"
   },
   {
     "id": 22,
@@ -287,12 +299,13 @@
     "from": "Delhi",
     "to": "Guwahati",
     "image": "https://images.unsplash.com/photo-1502920514313-52581002a659",
-    "airline": "Vistara",
+    "airline": "Qatar Airways",
     "departure": "05:00 AM",
     "arrival": "07:30 AM",
     "duration": "2h 30m",
     "price": 6300,
-    "discount": 18
+    "discount": 18,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 23,
@@ -318,7 +331,8 @@
     "arrival": "09:10 AM",
     "duration": "1h 50m",
     "price": 4700,
-    "discount": 13
+    "discount": 13,
+    "logo": "/logos/indigo.jpg"
   },
 
  
@@ -367,12 +381,13 @@
     "from": "Bangalore",
     "to": "Bangkok",
     "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-    "airline": "Thai Airways",
+    "airline": "Qatar Airways",
     "departure": "10:30 PM",
     "arrival": "02:00 AM",
     "duration": "4h 30m",
     "price": 31000,
-    "discount": 18
+    "discount": 18,
+    "logo": "/logos/qatar.jpg"
   },
   {
     "id": 29,
