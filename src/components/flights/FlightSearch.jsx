@@ -59,7 +59,7 @@ const FlightSearchBox = ({ onSearch }) => {
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "-100%" }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
         >
           <div className="absolute top-8 left-8 bg-black/40 text-white px-6 py-3 rounded-full text-lg font-semibold backdrop-blur-md">
             {destinations[activeBg].name}
