@@ -1,0 +1,71 @@
+{
+  "bookings": [
+    {
+      "id": "f35a",
+      "flight": {
+        "id": "1",
+        "type": "trending",
+        "from": "Delhi",
+        "to": "Mumbai",
+        "image": "https://images.unsplash.com/photo-1548013146-72479768bada",
+        "airline": "IndiGo",
+        "departure": "08:00 AM",
+        "arrival": "10:10 AM",
+        "duration": "2h 10m",
+        "price": 5200,
+        "discount": 20,
+        "logo": "/logos/indigo.jpg"
+      },
+      "passengers": [
+        {
+          "name": "jahanvi",
+          "age": "",
+          "medical": ""
+        }
+      ],
+      "departDate": "2026-02-19",
+      "returnDate": "",
+      "meal": "No Meal",
+      "seat": "Window",
+      "travelClass": "Economy",
+      "total": 6136,
+      "discount": 0,
+      "gst": 936,
+      "paymentStatus": "PAID",
+      "bookedAt": "2026-02-03T09:21:15.872Z"
+    },
+    {
+      "id": "441d",
+      "flight": {
+        "id": "6",
+        "type": "trending",
+        "from": "Delhi",
+        "to": "Jaipur",
+        "image": "https://images.unsplash.com/photo-1609137144813-7d9921338f24",
+        "airline": "SpiceJet",
+        "departure": "09:15 AM",
+        "arrival": "10:10 AM",
+        "duration": "55m",
+        "price": 2600,
+        "discount": 12
+      },
+      "passengers": [
+        {
+          "name": "YASH TIWARI",
+          "age": "25",
+          "medical": ""
+        }
+      ],
+      "departDate": "2026-02-04",
+      "returnDate": "",
+      "meal": "No Meal",
+      "seat": "Window",
+      "travelClass": "Economy",
+      "total": 3068,
+      "discount": 0,
+      "gst": 468,
+      "paymentStatus": "PAID",
+      "bookedAt": "2026-02-03T10:12:23.194Z"
+    }
+  ]
+}

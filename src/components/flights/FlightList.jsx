@@ -58,6 +58,11 @@ const FlightList = ({ onBookFlight }) => {
     }))
   }
 
+  const handleBookFlight = (flight) => {
+  setSelectedFlight(flight)
+}
+
+
   return (
     <div className="w-full">
 

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import TopHeader from "../components/TopHeader"
 import ProfileHeader from "../components/ProfileHeader"
 import FlightSearchBox from "/src/components/flights/FlightSearch"
@@ -8,16 +8,20 @@ import FlightList from "../components/flights/FlightList"
 import FlightResults from "../components/flights/FlightResults"
 import flightsData from "../data/flights.json"
 import BookingForm from "../components/bookings/BookingForm"
+import Payment from "../components/payment/Payment"
 
 const Profile = () => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("flightUser"))
   )
+  
+
 
   const [tab, setTab] = useState("Flights")
 
   const [selectedFlight, setSelectedFlight] = useState(null)
-
+  const [showPayment, setShowPayment] = useState(false)
+  const [bookingData, setBookingData] = useState(null)
 
   /* 🔍 SEARCH STATE */
   const [searchQuery, setSearchQuery] = useState(null)
@@ -34,6 +38,15 @@ const Profile = () => {
         f.to.toLowerCase().includes(searchQuery.to.toLowerCase())
       )
     : []
+
+    useEffect(() => {
+    if (tab === "Flights") {
+      // Reset booking/payment state whenever Flights tab is opened
+      setSelectedFlight(null);
+      setShowPayment(false);
+      setBookingData(null);
+    }
+  }, [tab]);
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -64,12 +77,11 @@ const Profile = () => {
         <div className="mt-6">
 
           {/* ✈️ FLIGHTS TAB */}
-          {tab === "Flights" && (
+         {tab === "Flights" && (
   <>
-    {!selectedFlight ? (
+    {!selectedFlight && !showPayment && (
       <>
         <FlightSearchBox onSearch={setSearchQuery} />
-
         {searchQuery ? (
           <FlightResults
             flights={filteredFlights}
@@ -80,15 +92,31 @@ const Profile = () => {
           <FlightList onBookFlight={setSelectedFlight} />
         )}
       </>
-    ) : (
+    )}
+
+    {selectedFlight && !showPayment && (
       <BookingForm
         flight={selectedFlight}
         searchData={searchQuery}
         onBack={() => setSelectedFlight(null)}
+        onProceedToPay={(data) => {
+          setBookingData(data);
+          setShowPayment(true);
+        }}
+      />
+    )}
+
+    {showPayment && bookingData && (
+      <Payment
+        booking={bookingData}
+        onBack={() => setShowPayment(false)}
+        onSuccess={() => setTab("My Bookings")}
       />
     )}
   </>
 )}
+
+
 
 
           {/* 📘 BOOKINGS */}

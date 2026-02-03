@@ -1,13 +1,18 @@
 import { useState } from "react"
 import { Calendar, Trash2, Plus } from "lucide-react"
 
-const BookingForm = ({ flight, searchData, onBack }) => {
+const BookingForm = ({ flight, searchData, onBack, onProceedToPay }) => {
   const [passengers, setPassengers] = useState([
     { name: "", age: "", medical: "" }
   ])
 
   const [departDate, setDepartDate] = useState(searchData?.departDate || "")
   const [returnDate, setReturnDate] = useState(searchData?.returnDate || "")
+
+  // ✅ MISSING STATES (FIX)
+  const [seat, setSeat] = useState("Window")
+  const [travelClass, setTravelClass] = useState("Economy")
+  const [meal, setMeal] = useState("No Meal")
 
   const addPassenger = () => {
     setPassengers([...passengers, { name: "", age: "", medical: "" }])
@@ -89,7 +94,11 @@ const BookingForm = ({ flight, searchData, onBack }) => {
       <div className="grid md:grid-cols-3 gap-8 mt-12">
         <div>
           <label className="label">Seat Preference</label>
-          <select className="input-glass">
+          <select
+            className="input-glass"
+            value={seat}
+            onChange={e => setSeat(e.target.value)}
+          >
             <option>Window</option>
             <option>Middle</option>
             <option>Aisle</option>
@@ -98,7 +107,11 @@ const BookingForm = ({ flight, searchData, onBack }) => {
 
         <div>
           <label className="label">Travel Class</label>
-          <select className="input-glass">
+          <select
+            className="input-glass"
+            value={travelClass}
+            onChange={e => setTravelClass(e.target.value)}
+          >
             <option>Economy</option>
             <option>Business</option>
             <option>First Class</option>
@@ -109,10 +122,14 @@ const BookingForm = ({ flight, searchData, onBack }) => {
           <label className="label">
             Meal <span className="text-sm text-indigo-600">(extra charges)</span>
           </label>
-          <select className="input-glass">
+          <select
+            className="input-glass"
+            value={meal}
+            onChange={e => setMeal(e.target.value)}
+          >
+            <option>No Meal</option>
             <option>Veg Meal (+₹250)</option>
             <option>Non-Veg Meal (+₹350)</option>
-            <option>No Meal</option>
           </select>
         </div>
       </div>
@@ -198,6 +215,17 @@ const BookingForm = ({ flight, searchData, onBack }) => {
 
       {/* SUBMIT */}
       <button
+        onClick={() =>
+          onProceedToPay({
+            flight,
+            passengers,
+            departDate,
+            returnDate,
+            meal,
+            seat,
+            travelClass
+          })
+        }
         className="mt-16 w-full py-6 rounded-full text-2xl font-extrabold
           bg-gradient-to-r from-indigo-600 via-sky-500 to-purple-600
           text-white hover:scale-[1.04] transition shadow-xl"
