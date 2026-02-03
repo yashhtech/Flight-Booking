@@ -87,3 +87,22 @@ body {
 
 
 
+.label {
+  @apply block mb-1 text-sm font-semibold text-indigo-800;
+}
+
+.label-sm {
+  @apply block mb-1 text-xs font-semibold text-indigo-700;
+}
+
+.input-glass {
+  @apply w-full px-4 py-3 rounded-xl
+  bg-white/90 text-slate-800
+  border border-indigo-200
+  focus:ring-2 focus:ring-indigo-500
+  focus:border-indigo-500
+  hover:border-indigo-400
+  outline-none transition;
+}
+
+

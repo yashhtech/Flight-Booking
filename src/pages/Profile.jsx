@@ -7,6 +7,7 @@ import Offers from "../components/Offers"
 import FlightList from "../components/flights/FlightList"
 import FlightResults from "../components/flights/FlightResults"
 import flightsData from "../data/flights.json"
+import BookingForm from "../components/bookings/BookingForm"
 
 const Profile = () => {
   const [user, setUser] = useState(
@@ -14,6 +15,9 @@ const Profile = () => {
   )
 
   const [tab, setTab] = useState("Flights")
+
+  const [selectedFlight, setSelectedFlight] = useState(null)
+
 
   /* 🔍 SEARCH STATE */
   const [searchQuery, setSearchQuery] = useState(null)
@@ -61,21 +65,31 @@ const Profile = () => {
 
           {/* ✈️ FLIGHTS TAB */}
           {tab === "Flights" && (
-            <>
-              {/* SEARCH BOX */}
-              <FlightSearchBox onSearch={setSearchQuery} />
+  <>
+    {!selectedFlight ? (
+      <>
+        <FlightSearchBox onSearch={setSearchQuery} />
 
-              {/* SEARCH RESULTS */}
-              {searchQuery ? (
-                <FlightResults
-                  flights={filteredFlights}
-                  searchData={searchQuery}
-                />
-              ) : (
-                <FlightList flights={flights} />
-              )}
-            </>
-          )}
+        {searchQuery ? (
+          <FlightResults
+            flights={filteredFlights}
+            searchData={searchQuery}
+            onBookFlight={setSelectedFlight}
+          />
+        ) : (
+          <FlightList onBookFlight={setSelectedFlight} />
+        )}
+      </>
+    ) : (
+      <BookingForm
+        flight={selectedFlight}
+        searchData={searchQuery}
+        onBack={() => setSelectedFlight(null)}
+      />
+    )}
+  </>
+)}
+
 
           {/* 📘 BOOKINGS */}
           {tab === "My Bookings" && <MyBookings />}

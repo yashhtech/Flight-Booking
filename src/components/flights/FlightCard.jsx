@@ -1,4 +1,4 @@
-const FlightCard = ({ flight }) => {
+const FlightCard = ({ flight, onBookFlight }) => {
   const discountedPrice =
     flight.price - (flight.price * flight.discount) / 100
 
@@ -17,7 +17,7 @@ const FlightCard = ({ flight }) => {
 
         <p className="text-sm text-gray-500">{flight.airline}</p>
 
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between text-sm text-gray-600">
           <span>{flight.departure}</span>
           <span>{flight.duration}</span>
           <span>{flight.arrival}</span>
@@ -33,7 +33,10 @@ const FlightCard = ({ flight }) => {
             </p>
           </div>
 
-          <button className="bg-blue-900 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
+          <button
+            onClick={() => onBookFlight(flight)}
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full hover:scale-105 transition"
+          >
             Book Now
           </button>
         </div>

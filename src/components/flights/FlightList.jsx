@@ -10,7 +10,7 @@ const sections = [
 
 const cities = ["All", "Delhi", "Mumbai", "Bangalore", "Jaipur"]
 
-const FlightList = () => {
+const FlightList = ({ onBookFlight }) => {
   const [flightsData, setFlightsData] = useState([])
   const [search, setSearch] = useState("")
   const [activeCity, setActiveCity] = useState("All")
@@ -122,22 +122,25 @@ const FlightList = () => {
                       key={flight.id}
                       className="transition-all duration-500 hover:scale-105 hover:shadow-2xl"
                     >
-                      <FlightCard flight={flight} />
+                     <FlightCard
+                      flight={flight}
+                     onBookFlight={onBookFlight}
+                      />
+
                     </div>
                   ))}
               </div>
 
               {/* 🔽 SHOW MORE / LESS */}
              <div className="flex justify-center gap-4 mt-12">
-  <button
-    disabled={filteredFlights.length <= getVisible(sec.type)}
-    onClick={() => showMore(sec.type)}
-    className={`px-10 py-3 rounded-full font-bold transition
-      ${filteredFlights.length > getVisible(sec.type)
-        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:scale-105"
-        : "bg-gray-300 text-gray-500 cursor-not-allowed"}
-    `}
-  >
+             <button
+             disabled={filteredFlights.length <= getVisible(sec.type)}
+             onClick={() => showMore(sec.type)}
+             className={`px-10 py-3 rounded-full font-bold transition
+              ${filteredFlights.length > getVisible(sec.type)
+             ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:scale-105"
+               : "bg-gray-300 text-gray-500 cursor-not-allowed"}
+             `}    >
     Show More ✈️
   </button>
 
