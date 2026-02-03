@@ -22,7 +22,7 @@ const FlightList = ({ onBookFlight }) => {
     fetch("http://localhost:3001/flights")
       .then(res => res.json())
       .then(data => setFlightsData(data))
-      .catch(err => console.log(err))
+      .catch(() => {}) // 👈 crash avoid
   }, [])
 
   /* 🔥 SCROLL ANIMATION */

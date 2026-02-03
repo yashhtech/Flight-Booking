@@ -1,0 +1,25 @@
+{
+  "cards": [
+    {
+      "id": "7233",
+      "number": "4567891523698",
+      "holder": "Jahanvi",
+      "expiry": "05/32",
+      "isDefault": true
+    },
+    {
+      "id": "94d2",
+      "number": "56987412365",
+      "holder": "Jahanvi",
+      "expiry": "02/35",
+      "isDefault": false
+    },
+    {
+      "id": "a586",
+      "number": "789546123548",
+      "holder": "Jahanvi",
+      "expiry": "06/39",
+      "isDefault": false
+    }
+  ]
+}

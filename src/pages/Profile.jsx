@@ -9,13 +9,19 @@ import FlightResults from "../components/flights/FlightResults"
 import flightsData from "../data/flights.json"
 import BookingForm from "../components/bookings/BookingForm"
 import Payment from "../components/payment/Payment"
+import bookingsData from "../data/bookings.json";
+import Accounts from "../components/payment/Accounts";
+import Settings from "../components/Settings"
+
 
 const Profile = () => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("flightUser"))
   )
   
-
+  const bookings = Array.isArray(bookingsData)
+  ? bookingsData
+  : bookingsData.bookings || []
 
   const [tab, setTab] = useState("Flights")
 
@@ -59,7 +65,7 @@ const Profile = () => {
 
         {/* TABS */}
         <div className="flex justify-center items-center gap-4 mt-8 bg-emerald-300 p-3 rounded-2xl shadow">
-          {["Flights", "My Bookings", "Deals & Offers", "Payment", "Settings"].map(t => (
+          {["Flights", "My Bookings", "Deals & Offers", "Accounts", "Settings"].map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -124,6 +130,12 @@ const Profile = () => {
 
           {/* 🎁 OFFERS */}
           {tab === "Deals & Offers" && <Offers />}
+
+          {/* 🎁 Accounts */}
+          {tab === "Accounts" && <Accounts />}
+
+           {/* 🎁 Settings */}
+          {tab === "Settings" && <Settings />}
 
         </div>
       </div>
