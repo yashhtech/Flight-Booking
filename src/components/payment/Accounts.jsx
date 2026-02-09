@@ -3,6 +3,8 @@ import { motion } from "framer-motion"
 import bookingsData from "../../data/bookings.json"
 
 const API = "http://localhost:4000/cards"
+// const API = "http://127.0.0.1:8000/cards_list/"
+
 
 const Accounts = () => {
   const [cards, setCards] = useState([])
@@ -65,6 +67,8 @@ const Accounts = () => {
   /* ❌ REMOVE CARD */
   const removeCard = async (id) => {
     await fetch(`${API}/${id}`, { method: "DELETE" })
+    // await fetch(`http://127.0.0.1:8000/cards_detail/${id}/`, { method: "DELETE" })
+
     setCards(cards.filter(c => c.id !== id))
   }
 
