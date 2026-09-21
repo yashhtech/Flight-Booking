@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { hashPassword, setStoredUser } from "../services/auth";
 
 const Signup = () => {
 
@@ -65,43 +65,46 @@ const Signup = () => {
   };
 
   /* ---------------- HANDLE SUBMIT ---------------- */
-  const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const validationErrors = validate();
-  setErrors(validationErrors);
+    const validationErrors = validate();
+    setErrors(validationErrors);
 
-  if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length === 0) {
+      const hashedPassword = await hashPassword(formData.password);
 
-    // SAVE TO LOCAL STORAGE
-    localStorage.setItem(
-  "flightUser",
-  JSON.stringify({
-    ...formData,
-    isLoggedIn: false,
-    bookings: []
-  })
-)
+      // SAVE TO LOCAL STORAGE VIA SECURE AUTH SERVICE
+      setStoredUser({
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        mobile: formData.mobile.trim(),
+        altEmail: formData.altEmail?.trim() || "",
+        password: hashedPassword,
+        isLoggedIn: false,
+        bookings: []
+      });
 
-    // SHOW SUCCESS ALERT
-    setShowSuccess(true);
+      // SHOW SUCCESS ALERT
+      setShowSuccess(true);
 
-    // RESET FORM
-    setFormData({
-      fullName: "",
-      email: "",
-      mobile: "",
-      altEmail: "",
-      password: "",
-      confirmPassword: "",
-    });
--
-    // AUTO CLOSE ALERT
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 2500);
-  }
-};
+      // RESET FORM
+      setFormData({
+        fullName: "",
+        email: "",
+        mobile: "",
+        altEmail: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // REDIRECT TO SIGNIN
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate("/signin");
+      }, 2000);
+    }
+  };
 
 
   return (
@@ -227,14 +230,14 @@ const Signup = () => {
               Create Account ✨
             </button>
             <div
-            onClick={() => navigate("/Signin")}
-            className="sm:col-span-2 text-center mt-4 text-white/80 cursor-pointer hover:text-cyan-300 transition"
+              onClick={() => navigate("/signin")}
+              className="sm:col-span-2 text-center mt-4 text-white/80 cursor-pointer hover:text-cyan-300 transition"
             >
-           Oops Already have an account?{" "}
-           <span className="font-semibold underline underline-offset-4">
-            Signin
-           </span>
-           </div>
+              Oops Already have an account?{" "}
+              <span className="font-semibold underline underline-offset-4">
+                Signin
+              </span>
+            </div>
 
           </form>
         </div>

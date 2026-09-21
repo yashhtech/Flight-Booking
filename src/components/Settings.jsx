@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
+import { getStoredUser, setStoredUser, logoutUser } from "../services/auth"
 
 const Settings = () => {
   const navigate = useNavigate()
 
   /* USER */
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => getStoredUser())
 
   /* UI STATES */
   const [darkMode, setDarkMode] = useState(false)
@@ -17,19 +18,12 @@ const Settings = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [newPassword, setNewPassword] = useState("")
 
-  /* LOAD USER */
+  /* REDIRECT IF NOT LOGGED IN */
   useEffect(() => {
-    const saved = localStorage.getItem("flightUser")
-    if (!saved) return navigate("/Signin")
-
-    const parsed = JSON.parse(saved)
-    if (!parsed?.email || !parsed?.password || !parsed?.isLoggedIn) {
-      navigate("/Signin")
-      return
+    if (!user?.isLoggedIn) {
+      navigate("/signin", { replace: true })
     }
-
-    setUser(parsed)
-  }, [navigate])
+  }, [user, navigate])
 
   /* THEME */
   const toggleTheme = () => {
@@ -45,7 +39,7 @@ const Settings = () => {
     }
 
     const updated = { ...user, password: newPassword }
-    localStorage.setItem("flightUser", JSON.stringify(updated))
+    setStoredUser(updated)
     setUser(updated)
     setNewPassword("")
     setShowPassword(false)
@@ -54,11 +48,8 @@ const Settings = () => {
 
   /* LOGOUT */
   const logout = () => {
-    localStorage.setItem(
-      "flightUser",
-      JSON.stringify({ ...user, isLoggedIn: false })
-    )
-    navigate("/Signin")
+    logoutUser()
+    navigate("/signin")
   }
 
   if (!user) {

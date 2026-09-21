@@ -1,117 +1,170 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import TopBar from "./TopBar";
-import { FaUserCircle } from "react-icons/fa";
-
+import { useState } from "react"
+import { useNavigate, useLocation, Link } from "react-router-dom"
+import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa"
+import { getStoredUser } from "../services/auth"
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [showTopBar, setShowTopBar] = useState(false);
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const user = getStoredUser()
 
-  // Nav items with emoji
   const navItems = [
     { label: "Home", href: "/", icon: "✈︎" },
     { label: "About", href: "/about", icon: "ⓘ" },
-    { label: "Offers", href: "/offers", icon: "$" },
-    // { label: "Destinations", href: "/destinations", icon: "🗺" },
-  ];
+    { label: "Offers", href: "/offers", icon: "🏷️" },
+    { label: "Destinations", href: "/destinations", icon: "🗺️" },
+  ]
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (e.clientY <= 100) setShowTopBar(true);
-      else setShowTopBar(false);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const handleClick = (e, href) => {
-    e.preventDefault();
-    navigate(href);
-  };
+  const handleProfileClick = () => {
+    if (user && user.isLoggedIn) {
+      navigate("/profile")
+    } else {
+      navigate("/signin")
+    }
+  }
 
   return (
-    <div className="w-full">
-      {/* TopBar */}
-      <AnimatePresence>
-        {showTopBar && <TopBar show={showTopBar} />}
-      </AnimatePresence>
-
-      {/* Floating Navbar */}
-      <motion.nav
-        animate={{ y: showTopBar ? 40 : 0 }}
-        transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 
-                   bg-white/80 backdrop-blur-md border border-black/20 
-                   shadow-lg rounded-full px-10 md:px-16 py-3 flex items-center"
+    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <nav
+        aria-label="Main Navigation"
+        className="pointer-events-auto bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xl rounded-full px-6 sm:px-8 py-3 flex items-center justify-between gap-6 max-w-5xl w-full"
       >
         {/* Logo */}
-        <motion.div
-          onClick={() => navigate("/")}
-          whileHover={{ scale: 1.1 }}
-          className="flex items-center gap-2 cursor-pointer select-none mr-8"
+        <Link
+          to="/"
+          className="flex items-center gap-2 select-none group transition transform hover:scale-105"
         >
-          <motion.span
-            whileHover={{ rotate: -8, scale: 1.2 }}
-            className="text-3xl text-yellow-500 drop-shadow-[0_0_20px_rgba(255,215,0,0.9)] -ml-6"
-          >
-            ✈️
-          </motion.span>
-          <span className="text-xl md:text-2xl font-extrabold text-black drop-shadow-lg">
+          <span className="text-2xl transform transition group-hover:rotate-12">✈️</span>
+          <span className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             SkyRoute
           </span>
-        </motion.div>
+        </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex gap-4">
+        {/* Desktop Navigation Links */}
+        <ul className="hidden md:flex items-center gap-2">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.href;
+            const isActive = location.pathname === item.href
             return (
-              <li key={item.href} className="relative">
-                <a
-                  href={item.href}
-                  onClick={(e) => handleClick(e, item.href)}
-                  className={`relative z-10 px-5 py-2 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
+              <li key={item.href}>
+                <Link
+                  to={item.href}
+                  className={`px-4 py-2 rounded-full font-bold text-sm sm:text-base transition-all duration-200 flex items-center gap-1.5 ${
                     isActive
-                      ? "bg-blue-400 text-white scale-105"
-                      : "text-black hover:bg-black hover:text-white hover:scale-105"
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-500/30"
+                      : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
                   }`}
                 >
-                  <span>{item.icon}</span>
+                  <span className="text-xs">{item.icon}</span>
                   {item.label}
-                </a>
+                </Link>
               </li>
-            );
+            )
           })}
         </ul>
 
-        {/* Contact Button */}
-        <motion.button
-          onClick={() => navigate("/contact")}
-          whileHover={{ scale: 1.05, backgroundColor: "red", color: "#fff" }}
-          className="hidden md:block  text-red-600 px-6 py-2 rounded-full font-semibold shadow-lg ml-8 transition-all text-xl"
-        >
-        ☏Contact
-        </motion.button>
+        {/* Desktop Right Actions */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link
+            to="/contact"
+            className="text-slate-700 hover:text-blue-600 px-4 py-2 rounded-full font-semibold text-sm transition"
+          >
+            Support & Contact
+          </Link>
 
-        {/* Profile Icon */}
-<motion.div
-  onClick={() => navigate("/Signin")}
-  whileHover={{ scale: 1.15 }}
-  whileTap={{ scale: 0.95 }}
-  className="hidden md:flex items-center justify-center 
-             ml-7 w-12 h-12 rounded-full 
-             bg-black text-white cursor-pointer 
-             shadow-lg hover:bg-sky-500 transition-all"
->
-  <FaUserCircle className="text-3xl" />
-</motion.div>
+          <button
+            onClick={handleProfileClick}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 hover:bg-blue-600 text-white font-medium text-sm transition-all shadow-md hover:scale-105"
+            aria-label="User Account"
+          >
+            <FaUserCircle className="text-lg" />
+            <span>{user && user.isLoggedIn ? (user.fullName?.split(" ")[0] || "Profile") : "Sign In"}</span>
+          </button>
+        </div>
 
-      </motion.nav>
-    </div>
-  );
-};
+        {/* Mobile Hamburger Toggle */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            onClick={handleProfileClick}
+            className="p-2 text-slate-800 hover:text-blue-600 transition"
+            aria-label="User Profile"
+          >
+            <FaUserCircle className="text-2xl" />
+          </button>
 
-export default Navbar;
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-slate-800 hover:text-blue-600 transition"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 top-20 bg-slate-900/90 backdrop-blur-md z-40 p-6 pointer-events-auto md:hidden flex flex-col justify-between">
+          <ul className="space-y-4 pt-4">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  to={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-5 py-3 rounded-2xl text-lg font-bold transition ${
+                    location.pathname === item.href
+                      ? "bg-blue-600 text-white"
+                      : "text-slate-200 hover:bg-slate-800"
+                  }`}
+                >
+                  <span className="mr-3">{item.icon}</span>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-5 py-3 rounded-2xl text-lg font-bold text-slate-200 hover:bg-slate-800 transition"
+              >
+                <span className="mr-3">📞</span> Contact Us
+              </Link>
+            </li>
+          </ul>
+
+          <div className="pb-8 space-y-3">
+            {user && user.isLoggedIn ? (
+              <Link
+                to="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full py-3.5 rounded-full bg-blue-600 text-white text-center font-bold text-lg shadow-lg"
+              >
+                Go to Profile ({user.fullName || "User"})
+              </Link>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <Link
+                  to="/signin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-3 rounded-full bg-slate-800 text-white text-center font-bold"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-3 rounded-full bg-blue-600 text-white text-center font-bold"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </header>
+  )
+}
+
+export default Navbar

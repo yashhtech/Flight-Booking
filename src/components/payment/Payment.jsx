@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CheckCircle } from "lucide-react"
+import { createBooking } from "../../services/api"
 
 const GST = 0.18
 
@@ -28,7 +28,7 @@ const Payment = ({ booking, onSuccess , onBack}) => {
 
   const total = subtotal + gstAmount - discount
 
-  // ✅ UPDATED: POST METHOD (JSON SERVER)
+  // ✅ CONFIRM BOOKING VIA RESILIENT API SERVICE
   const confirmBooking = async () => {
     setLoading(true)
 
@@ -42,14 +42,7 @@ const Payment = ({ booking, onSuccess , onBack}) => {
     }
 
     try {
-      await fetch("http://localhost:5000/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(bookingPayload)
-      })
-
+      await createBooking(bookingPayload)
       alert("🎉 Booking Confirmed Successfully!")
       onSuccess()
     } catch (err) {

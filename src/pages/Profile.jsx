@@ -1,7 +1,8 @@
-import { useState , useEffect } from "react"
+import { useState } from "react"
+import { useLocation } from "react-router-dom"
 import TopHeader from "../components/TopHeader"
 import ProfileHeader from "../components/ProfileHeader"
-import FlightSearchBox from "/src/components/flights/FlightSearch"
+import FlightSearchBox from "../components/flights/FlightSearch"
 import MyBookings from "../components/bookings/MyBookings"
 import Offers from "../components/Offers"
 import FlightList from "../components/flights/FlightList"
@@ -9,28 +10,21 @@ import FlightResults from "../components/flights/FlightResults"
 import flightsData from "../data/flights.json"
 import BookingForm from "../components/bookings/BookingForm"
 import Payment from "../components/payment/Payment"
-import bookingsData from "../data/bookings.json";
 import Accounts from "../components/payment/Accounts";
 import Settings from "../components/Settings"
-
+import { getStoredUser } from "../services/auth"
 
 const Profile = () => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("flightUser"))
-  )
-  
-  const bookings = Array.isArray(bookingsData)
-  ? bookingsData
-  : bookingsData.bookings || []
-
-  const [tab, setTab] = useState("Flights")
+  const location = useLocation()
+  const [user, setUser] = useState(() => getStoredUser())
+  const [tab, setTab] = useState(location.state?.tab || "Flights")
 
   const [selectedFlight, setSelectedFlight] = useState(null)
   const [showPayment, setShowPayment] = useState(false)
   const [bookingData, setBookingData] = useState(null)
 
   /* 🔍 SEARCH STATE */
-  const [searchQuery, setSearchQuery] = useState(null)
+  const [searchQuery, setSearchQuery] = useState(location.state?.searchQuery || null)
 
   /* ✅ NORMALIZE FLIGHTS DATA (MOST IMPORTANT FIX) */
   const flights = Array.isArray(flightsData)
@@ -45,14 +39,14 @@ const Profile = () => {
       )
     : []
 
-    useEffect(() => {
-    if (tab === "Flights") {
-      // Reset booking/payment state whenever Flights tab is opened
-      setSelectedFlight(null);
-      setShowPayment(false);
-      setBookingData(null);
+  const handleTabChange = (nextTab) => {
+    if (nextTab === "Flights") {
+      setSelectedFlight(null)
+      setShowPayment(false)
+      setBookingData(null)
     }
-  }, [tab]);
+    setTab(nextTab)
+  }
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -68,7 +62,7 @@ const Profile = () => {
           {["Flights", "My Bookings", "Deals & Offers", "Accounts", "Settings"].map(t => (
             <button
               key={t}
-              onClick={() => setTab(t)}
+              onClick={() => handleTabChange(t)}
               className={`px-6 py-2 rounded-full font-semibold transition
                 ${tab === t
                   ? "bg-blue-900 text-white"
@@ -116,7 +110,12 @@ const Profile = () => {
       <Payment
         booking={bookingData}
         onBack={() => setShowPayment(false)}
-        onSuccess={() => setTab("My Bookings")}
+        onSuccess={() => {
+          setSelectedFlight(null)
+          setShowPayment(false)
+          setBookingData(null)
+          setTab("My Bookings")
+        }}
       />
     )}
   </>

@@ -187,9 +187,9 @@ const affordableDeals = [
 /* ===================== COMPONENT ===================== */
 
 const Offers = () => {
-const navigate = useNavigate()
-  const [active, setActive] = useState("flash")
+  const navigate = useNavigate()
 
+  const [activeCategory, setActiveCategory] = useState("all")
   const [copied, setCopied] = useState(null)
 
   const handleCopy = code => {
@@ -198,17 +198,18 @@ const navigate = useNavigate()
     setTimeout(() => setCopied(null), 2000)
   }
 
-const [destination, setDestination] = useState("All")
-const [sort, setSort] = useState("low")
-const [showAll, setShowAll] = useState(false)
+  const [destination, setDestination] = useState("All")
+  const [sort, setSort] = useState("low")
+  const [showAll, setShowAll] = useState(false)
 
-const filteredDeals = deals
-  .filter(d =>
-    destination === "All" ? true : d.location.includes(destination)
-  )
-  .sort((a, b) =>
-    sort === "low" ? a.price - b.price : b.price - a.price
-  )
+  const filteredDeals = deals
+    .filter(d =>
+      (activeCategory === "all" ? true : d.type === activeCategory) &&
+      (destination === "All" ? true : d.location.includes(destination))
+    )
+    .sort((a, b) =>
+      sort === "low" ? a.price - b.price : b.price - a.price
+    )
 
 const visibleDeals = showAll ? filteredDeals : filteredDeals.slice(0, 3)
 
@@ -279,8 +280,10 @@ const visibleDeals = showAll ? filteredDeals : filteredDeals.slice(0, 3)
         key={c.id}
         whileHover={{ y: -12, scale: 1.04 }}
         transition={{ type: "spring", stiffness: 200 }}
-        onClick={() => setActive(c.id)}
-        className={`relative cursor-pointer bg-gradient-to-br ${c.gradient} text-white p-6 rounded-2xl shadow-2xl`}
+        onClick={() => setActiveCategory(prev => prev === c.id ? "all" : c.id)}
+        className={`relative cursor-pointer bg-gradient-to-br ${c.gradient} text-white p-6 rounded-2xl shadow-2xl transition-all ${
+          activeCategory === c.id ? "ring-4 ring-white shadow-cyan-300/50" : ""
+        }`}
       >
         {/* Badge */}
         <span className="absolute top-4 right-4 bg-white/20 text-[10px] px-2 py-0.5 rounded-full font-semibold">

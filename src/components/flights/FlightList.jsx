@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import FlightCard from "./FlightCard"
+import { getFlights } from "../../services/api"
 
 const sections = [
   { title: "🔥 Trending Flights", type: "trending", bg: "bg-gradient-to-r from-rose-100 to-pink-200" },
@@ -19,10 +20,13 @@ const FlightList = ({ onBookFlight }) => {
 
   /* 🔽 FETCH DATA */
   useEffect(() => {
-    fetch("http://localhost:3001/flights")
-      .then(res => res.json())
-      .then(data => setFlightsData(data))
-      .catch(() => {}) // 👈 crash avoid
+    let mounted = true
+    getFlights().then((data) => {
+      if (mounted) setFlightsData(data)
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   /* 🔥 SCROLL ANIMATION */
@@ -39,6 +43,7 @@ const FlightList = ({ onBookFlight }) => {
     )
 
     sectionRefs.current.forEach(sec => sec && observer.observe(sec))
+    return () => observer.disconnect()
   }, [])
 
   /* 🔢 SHOW MORE HELPERS */
@@ -57,10 +62,6 @@ const FlightList = ({ onBookFlight }) => {
       [type]: 8
     }))
   }
-
-  const handleBookFlight = (flight) => {
-  setSelectedFlight(flight)
-}
 
 
   return (

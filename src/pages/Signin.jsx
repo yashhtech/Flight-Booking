@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getStoredUser, setStoredUser, verifyPassword } from "../services/auth";
 
 const Signin = () => {
 
@@ -21,30 +21,29 @@ const Signin = () => {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem("flightUser"));
+    const savedUser = getStoredUser();
 
-    if (savedUser && savedUser.email === formData.email && savedUser.password === formData.password) {
+    if (savedUser && savedUser.email && savedUser.email.toLowerCase() === formData.email.trim().toLowerCase()) {
+      const isMatch = await verifyPassword(formData.password, savedUser.password);
+      if (isMatch) {
+        setStoredUser({
+          ...savedUser,
+          isLoggedIn: true
+        });
 
-  localStorage.setItem(
-    "flightUser",
-    JSON.stringify({
-      ...savedUser,
-      isLoggedIn: true
-    })
-  )
+        setShowSuccess(true);
 
-  setShowSuccess(true)
-
-  setTimeout(() => {
-    navigate("/profile")
-  }, 2000)
-}
- else {
-      setError("Invalid email or password");
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1500);
+        return;
+      }
     }
+
+    setError("Invalid email or password");
   };
 
   return (
@@ -159,7 +158,7 @@ const Signin = () => {
           </button>
 
           <div
-            onClick={() => navigate("/Signup")}
+            onClick={() => navigate("/signup")}
             className="sm:col-span-2 text-center mt-4 text-white/80 cursor-pointer hover:text-cyan-300 transition"
             >
             Oops Don't have an account?{" "}

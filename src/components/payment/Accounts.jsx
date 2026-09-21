@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import bookingsData from "../../data/bookings.json"
-
-const API = "http://localhost:4000/cards"
-// const API = "http://127.0.0.1:8000/cards_list/"
-
+import { getCards, addCard, setDefaultCard, deleteCard, getBookings } from "../../services/api"
 
 const Accounts = () => {
   const [cards, setCards] = useState([])
+  const [transactions, setTransactions] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -17,15 +14,23 @@ const Accounts = () => {
     expiry: ""
   })
 
-  /* 🔄 LOAD CARDS */
+  /* 🔄 LOAD CARDS & TRANSACTIONS */
   useEffect(() => {
-    fetch(API)
-      .then(res => res.json())
-      .then(data => {
-        setCards(data || [])
-        setLoading(false)
+    let mounted = true
+    Promise.all([getCards(), getBookings()])
+      .then(([cardsData, bookingsData]) => {
+        if (mounted) {
+          setCards(cardsData || [])
+          setTransactions(bookingsData || [])
+          setLoading(false)
+        }
       })
-      .catch(() => setLoading(false))
+      .catch(() => {
+        if (mounted) setLoading(false)
+      })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   /* ➕ ADD CARD */
@@ -37,43 +42,23 @@ const Accounts = () => {
       isDefault: cards.length === 0
     }
 
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newCard)
-    })
-
-    const saved = await res.json()
-    setCards([...cards, saved])
+    const saved = await addCard(newCard)
+    setCards(prev => [...prev, saved])
     setForm({ number: "", holder: "", expiry: "" })
     setShowForm(false)
   }
 
   /* ⭐ SET DEFAULT */
   const setDefault = async (id) => {
-    await Promise.all(
-      cards.map(c =>
-        fetch(`${API}/${c.id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ isDefault: c.id === id })
-        })
-      )
-    )
-
-    setCards(cards.map(c => ({ ...c, isDefault: c.id === id })))
+    await setDefaultCard(id)
+    setCards(prev => prev.map(c => ({ ...c, isDefault: c.id === id })))
   }
 
   /* ❌ REMOVE CARD */
   const removeCard = async (id) => {
-    await fetch(`${API}/${id}`, { method: "DELETE" })
-    // await fetch(`http://127.0.0.1:8000/cards_detail/${id}/`, { method: "DELETE" })
-
-    setCards(cards.filter(c => c.id !== id))
+    await deleteCard(id)
+    setCards(prev => prev.filter(c => c.id !== id))
   }
-
-  /* 📦 TRANSACTIONS */
-  const transactions = bookingsData.bookings || []
 
   return (
     <div className="p-4 md:p-8 space-y-14">
@@ -179,9 +164,13 @@ const Accounts = () => {
         <h2 className="text-2xl font-bold mb-6">Recent Transactions</h2>
 
         <div className="space-y-4">
-          {transactions.map(txn => (
+          {transactions.length === 0 && (
+            <p className="text-gray-400 py-4 text-center">No recent transactions found</p>
+          )}
+
+          {transactions.map((txn, index) => (
             <motion.div
-              key={txn.id}
+              key={txn.id || index}
               whileHover={{ scale: 1.02 }}
               className="flex justify-between items-center bg-gray-50 rounded-2xl p-4"
             >
@@ -191,18 +180,18 @@ const Accounts = () => {
                 </div>
                 <div>
                   <p className="font-semibold">
-                    Flight {txn.flight.from} → {txn.flight.to}
+                    Flight {txn.flight?.from || "Depart"} → {txn.flight?.to || "Arrive"}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {new Date(txn.bookedAt).toDateString()}
+                    {txn.bookedAt ? new Date(txn.bookedAt).toDateString() : "Recent"}
                   </p>
                 </div>
               </div>
 
               <div className="text-right">
-                <p className="font-bold text-lg">₹{txn.total}</p>
+                <p className="font-bold text-lg">₹{txn.total || 0}</p>
                 <p className="text-green-600 text-sm font-semibold">
-                  {txn.paymentStatus}
+                  {txn.paymentStatus || "PAID"}
                 </p>
               </div>
             </motion.div>

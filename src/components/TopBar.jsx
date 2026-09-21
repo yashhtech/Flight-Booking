@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const TopBar = ({ show }) => {
+const TopBar = ({ show = true }) => {
   const navigate = useNavigate();
 
   return (
@@ -39,7 +39,7 @@ const TopBar = ({ show }) => {
         {/* Right Buttons */}
         <div className="flex gap-10">
           <motion.button
-            onClick={() => navigate("/Signin")}
+            onClick={() => navigate("/signin")}
             whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
             className="px-5 py-1  rounded-full  text-blue-950 font-semibold shadow-sm text-xl"
@@ -48,7 +48,7 @@ const TopBar = ({ show }) => {
           </motion.button>
 
           <motion.button
-            onClick={() => navigate("/Signup")}
+            onClick={() => navigate("/signup")}
             whileHover={{ scale: 1.05, backgroundColor: "#1e2939", color: "#fff" }}
             transition={{ type: "spring", stiffness: 300 }}
             className="px-6 py-2 rounded-full  text-blue-950 font-semibold shadow-sm text-xl"

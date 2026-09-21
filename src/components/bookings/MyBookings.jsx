@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { getBookings, cancelBooking, rescheduleBooking } from "../../services/api";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/bookings")
-      .then((res) => res.json())
+    let mounted = true;
+    getBookings()
       .then((data) => {
-        setBookings(data.bookings || data);
-        setLoading(false);
+        if (mounted) {
+          setBookings(data || []);
+          setLoading(false);
+        }
       })
       .catch((err) => {
-        console.error(err);
-        setLoading(false);
+        if (mounted) {
+          console.error(err);
+          setLoading(false);
+        }
       });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   /* ================= CANCEL ================= */
@@ -26,14 +34,11 @@ const MyBookings = () => {
     );
     if (!ok) return;
 
-    await fetch(`http://localhost:5000/bookings/${id}`, {
-      method: "DELETE",
-    });
-
+    await cancelBooking(id);
     setBookings((prev) => prev.filter((b) => b.id !== id));
 
     alert(
-      "Ticket has been cancelled.\nRefunded amount can be in your account within 72 hours."
+      "Ticket has been cancelled.\nRefunded amount will be in your account within 72 hours."
     );
   };
 
@@ -46,19 +51,10 @@ const MyBookings = () => {
 
     if (!newDate) return;
 
-    const updatedBooking = {
-      ...booking,
-      departDate: newDate,
-    };
-
-    await fetch(`http://localhost:5000/bookings/${booking.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ departDate: newDate }),
-    });
+    await rescheduleBooking(booking.id, newDate);
 
     setBookings((prev) =>
-      prev.map((b) => (b.id === booking.id ? updatedBooking : b))
+      prev.map((b) => (b.id === booking.id ? { ...b, departDate: newDate } : b))
     );
 
     alert("Your flight has been rescheduled successfully ✈️");

@@ -10,11 +10,6 @@ const FlightResults = ({ flights, searchData, onBookFlight }) => {
     )
   }
 
-const handleBookFlight = (flight) => {
-  setSelectedFlight(flight)
-}
-
-
   return (
     <div className="space-y-6 px-4 max-w-6xl mx-auto">
       {flights.map((flight, index) => (
